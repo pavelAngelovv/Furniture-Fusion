@@ -7,7 +7,7 @@ const FurnitureCatalogCard = ({ item }) => {
     <Card>
       <CardMedia
         component="img"
-        height="240"
+        height="340"
         image={item.image}
         alt={item.title}
       />
