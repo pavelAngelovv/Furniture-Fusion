@@ -20,7 +20,7 @@ const FurnitureCatalog = () => {
   };
 
   return (
-    <Container style={{marginTop: '3%'}}>
+    <Container sx={{marginTop: '8%'}}>
       <Grid container spacing={4}>
         {furnitureItems.map((item) => (
           <Grid item key={item._id} xs={12} sm={6} md={4}>

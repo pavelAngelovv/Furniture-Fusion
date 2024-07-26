@@ -1,43 +1,38 @@
-/* Navbar.css */
 .navbar {
-    flex-grow: 1;
-  }
-  
-  .app-bar {
-    position: static;
-  }
-  
-  .search {
-    position: relative;
-    border-radius: 4px; /* Use a border radius from your theme if available */
-    background-color: rgba(255, 255, 255, 0.15);
-    margin-right: 16px;
-    margin-left: 7%;
-    height: 40px;
+    display: flex;
+    width: 100%;
+}
 
-  }
-  
-  .search:hover {
+.app-bar {
+    position: static;
+}
+
+.search {
+    position: relative;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.15);
+    height: 40px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.search:hover {
     background-color: rgba(255, 255, 255, 0.25);
-  }
-  
-  .search-icon-wrapper {
+}
+
+.search-icon-wrapper {
     padding: 0 16px;
     height: 100%;
-    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .styled-input-base {
+}
+
+.styled-input-base {
     color: inherit;
-    /* padding: 8px 8px 8px 0; */
-    padding-left: calc(1em + 32px);
+    padding-left: 16px;
+    padding-right: calc(1em + 32px);
     transition: width 0.2s;
-  }
-  
-  .styled-input-base.md {
-    width: 20ch;
-  }
-  
+    width: 100%;
+}
