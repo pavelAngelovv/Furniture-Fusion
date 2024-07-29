@@ -4,19 +4,33 @@ import Layout from './components/layout/Layout';
 import FurnitureCatalog from './components/furniture-catalog/FurnitureCatalog';
 import FurnitureDetails from './components/furniture-details/FurnitureDetails';
 import Home from './components/home/Home';
+import Register from './components/register/Register';
+import Login from './components/login/Login';
+import { AuthProvider } from './contexts/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   return (
     <Router>
-      <Layout>
+      <AuthProvider>
+        <Layout>
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="/furniture" element={<FurnitureCatalog />} />
             <Route path="/furniture/:id" element={<FurnitureDetails />} />
-            {/* <Route path="/login" element={LoginPage} /> */}
-            {/* <Route path="/register" element={RegisterPage} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            />
           </Routes>
-      </Layout>
+        </Layout>
+      </AuthProvider>
     </Router>
   );
 };

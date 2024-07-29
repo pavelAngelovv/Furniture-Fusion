@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,10 +11,10 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useLocation } from 'react-router-dom';
 import { useMediaQuery, useTheme } from '@mui/material';
 import styles from '../../../public/styles/Navbar.module.css';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
+import useAuth from '../../hooks/useAuth';
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
@@ -36,6 +37,7 @@ export default function PrimarySearchAppBar() {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const location = useLocation();
     const theme = useTheme();
+    const { isAuthenticated, logout } = useAuth();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const isMenuOpen = Boolean(anchorEl);
@@ -74,8 +76,24 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            {isAuthenticated ? [
+                <MenuItem key="profile" component={Link} to="/profile" onClick={handleMenuClose}>
+                    Profile
+                </MenuItem>,
+                <MenuItem key="logout" onClick={() => {
+                    handleMenuClose();
+                    logout(); // Call the logout function
+                }}>
+                    Logout
+                </MenuItem>
+            ] : [
+                <MenuItem key="login" component={Link} to="/login" onClick={handleMenuClose}>
+                    Login
+                </MenuItem>,
+                <MenuItem key="register" component={Link} to="/register" onClick={handleMenuClose}>
+                    Register
+                </MenuItem>
+            ]}
         </Menu>
     );
 
