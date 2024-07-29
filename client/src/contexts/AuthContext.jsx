@@ -14,8 +14,10 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(!!token);
     }, []);
 
-    const login = (token) => {
+    const login = (token, firstName, lastName) => {
         localStorage.setItem('accessToken', token);
+        localStorage.setItem('firstName', firstName);
+        localStorage.setItem('lastName', lastName);
         setIsAuthenticated(true);
         navigate('/');
     };

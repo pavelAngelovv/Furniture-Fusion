@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { TextField, Button, Typography, Box } from '@mui/material';
 import useAuth from '../../hooks/useAuth'; // Ensure correct import path
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -11,8 +12,8 @@ const LoginForm = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:3030/users/login', data);
-            const { accessToken } = response.data;
-            login(accessToken); // Now login should be defined as a function
+            const { accessToken, firstName, lastName } = response.data;
+            login(accessToken, firstName, lastName); // Now login should be defined as a function
             console.log('Login successful:', response.data);
         } catch (error) {
             if (error.response) {
@@ -73,15 +74,18 @@ const LoginForm = () => {
                 helperText={errors.password?.message}
             />
 
-            {/* Submit Button */}
-            <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                sx={{ mt: 2 }}
-            >
-                Login
-            </Button>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                >
+                    Login
+                </Button>
+                <Typography variant="body2">
+                    Don&apos;t have an account? Click <Link to={'/register'}>here</Link> to register.
+                </Typography>
+            </Box>
         </Box>
     );
 };

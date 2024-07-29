@@ -11,7 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Button, useMediaQuery, useTheme } from '@mui/material';
 import styles from '../../../public/styles/Navbar.module.css';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
 import useAuth from '../../hooks/useAuth';
@@ -39,6 +39,12 @@ export default function PrimarySearchAppBar() {
     const theme = useTheme();
     const { isAuthenticated, logout } = useAuth();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    
+    const isLoginPage = location.pathname === '/login';
+    const isRegisterPage = location.pathname === '/register';
+
+    const firstName = localStorage.getItem('firstName') || '';
+    const lastName = localStorage.getItem('lastName') || '';
 
     const isMenuOpen = Boolean(anchorEl);
     const isCatalogPage = location.pathname === '/furniture';
@@ -76,24 +82,28 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {isAuthenticated ? [
-                <MenuItem key="profile" component={Link} to="/profile" onClick={handleMenuClose}>
-                    Profile
-                </MenuItem>,
-                <MenuItem key="logout" onClick={() => {
-                    handleMenuClose();
-                    logout(); // Call the logout function
-                }}>
-                    Logout
-                </MenuItem>
-            ] : [
-                <MenuItem key="login" component={Link} to="/login" onClick={handleMenuClose}>
-                    Login
-                </MenuItem>,
-                <MenuItem key="register" component={Link} to="/register" onClick={handleMenuClose}>
-                    Register
-                </MenuItem>
-            ]}
+            {isAuthenticated ? (
+                <>
+                    <MenuItem key="profile" component={Link} to="/profile" onClick={handleMenuClose}>
+                        Profile
+                    </MenuItem>
+                    <MenuItem key="logout" onClick={() => {
+                        handleMenuClose();
+                        logout(); // Call the logout function
+                    }}>
+                        Logout
+                    </MenuItem>
+                </>
+            ) : (
+                <>
+                    <MenuItem key="login" component={Link} to="/login" onClick={handleMenuClose}>
+                        Login
+                    </MenuItem>
+                    <MenuItem key="register" component={Link} to="/register" onClick={handleMenuClose}>
+                        Register
+                    </MenuItem>
+                </>
+            )}
         </Menu>
     );
 
@@ -137,18 +147,37 @@ export default function PrimarySearchAppBar() {
                             </div>
                         </Box>
                     )}
-                    <IconButton
-                        size="large"
-                        edge="end"
-                        aria-label="account of current user"
-                        aria-controls={menuId}
-                        aria-haspopup="true"
-                        onClick={handleProfileMenuOpen}
-                        color="inherit"
-                        sx={{ position: 'absolute', right: 16 }}
-                    >
-                        <AccountCircle />
-                    </IconButton>
+                    {isAuthenticated ? (
+                        <Box
+                            display="flex"
+                            alignItems="center"
+                            sx={{ position: 'relative', p: 1 }}
+                        >
+                            <Box sx={{ mr: 2 }}>
+                                Hello {firstName} {lastName}
+                            </Box>
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </Box>
+                    ) : !isLoginPage && !isRegisterPage ? (
+                        <Box>
+                            <Button color="inherit" component={Link} to="/login">
+                                Login
+                            </Button>
+                            <Button color="inherit" component={Link} to="/register">
+                                Register
+                            </Button>
+                        </Box>
+                    ) : null}
                 </Toolbar>
             </AppBar>
             {renderMenu}

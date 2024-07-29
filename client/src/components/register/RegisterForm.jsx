@@ -2,7 +2,7 @@
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { TextField, Button, Typography, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
     // Initialize useForm
@@ -13,9 +13,11 @@ const RegisterForm = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:3030/users/register', data);
-            const { accessToken } = response.data;
-            
+            const { accessToken, firstName, lastName } = response.data;
+
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('firstName', firstName);
+            localStorage.setItem('lastName', lastName);
             navigate('/')
             console.log('Registration successful:', response.data);
         } catch (error) {
@@ -137,15 +139,19 @@ const RegisterForm = () => {
             />
 
             {/* Submit Button */}
-            <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                sx={{ mt: 2 }}
-            >
-                Register
-            </Button>
-        </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                >
+                    Register
+                </Button>
+                <Typography variant="body2">
+                    Already have an account? Click <Link to={'/login'}>here</Link> to log in.
+                </Typography>
+            </Box>
+        </Box >
     );
 };
 
