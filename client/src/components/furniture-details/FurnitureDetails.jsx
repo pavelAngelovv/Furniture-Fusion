@@ -34,20 +34,21 @@ const FurnitureDetails = () => {
     );
 
     return (
-        <Container sx={{ mt: '10rem' }}>
+        <Container sx={{ mt: { xs: '7rem', sm: '5rem', md: '10rem' } }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
-                {/* Image Section */}
-                <Box sx={{ flex: 2.3, display: 'flex', justifyContent: 'center', width: '10%' }}>
+                <Box sx={{ flex: 2.3, display: 'flex', justifyContent: 'center' }}>
                     <CardMedia
                         component="img"
                         alt={furniture.title}
-                        height="600"
-                        sx={{objectFit:'contain', width: '80%' }}
+                        sx={{
+                            objectFit: 'contain',
+                            width: '100%',
+                            height: { xs: 300, sm: 600 }
+                        }}
                         image={furniture.image}
                     />
                 </Box>
 
-                {/* Details Section */}
                 <Box sx={{ flex: 1, p: 2 }}>
                     <CardContent>
                         <Typography variant="h5" component="div" sx={{ fontWeight: '700', mb: 2 }}>
@@ -64,7 +65,6 @@ const FurnitureDetails = () => {
                             {` (${furniture.rating.count})`}
                         </Typography>
 
-                        {/* Grid for Icons and Text */}
                         <Grid container spacing={2} sx={{ ml: '-70px', mb: '3rem' }}>
                             <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <img src='../../../public/images/categorization.png' alt="Category" style={{ height: '30px', width: 'auto' }} />
@@ -84,14 +84,13 @@ const FurnitureDetails = () => {
                                     {furniture.weight} kg
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+                            <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <img src='../../../public/images/cube.png' alt="Dimensions" style={{ height: '30px', width: 'auto' }} />
                                 <Typography variant="body2" component="div" sx={{ mt: 1, textAlign: 'center' }}>
                                     {furniture.dimensions.length}cm x {furniture.dimensions.width}cm x {furniture.dimensions.height}cm
                                 </Typography>
                             </Grid>
                         </Grid>
-
 
                         <Button variant="contained" color="primary" sx={{ mt: 2 }}>
                             Add to Cart
@@ -104,5 +103,3 @@ const FurnitureDetails = () => {
 };
 
 export default FurnitureDetails;
-
-                        

@@ -13,6 +13,7 @@ const FurnitureCatalog = () => {
   const fetchFurnitureItems = async () => {
     try {
       const items = await getFurnitureItems();
+      console.log(items);
       setFurnitureItems(items);
     } catch (error) {
       console.error('Error fetching furniture items', error);
@@ -20,7 +21,7 @@ const FurnitureCatalog = () => {
   };
 
   return (
-    <Container sx={{marginTop: '8%'}}>
+    <Container sx={{marginTop: {xs: '20%', sm: '17%', md: '8%'}}}>
       <Grid container spacing={4}>
         {furnitureItems.map((item) => (
           <Grid item key={item._id} xs={12} sm={6} md={4}>

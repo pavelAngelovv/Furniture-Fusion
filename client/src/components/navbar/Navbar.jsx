@@ -10,6 +10,8 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useLocation } from 'react-router-dom';
+import { useMediaQuery, useTheme } from '@mui/material';
 import styles from '../../../public/styles/Navbar.module.css';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
 
@@ -23,14 +25,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         [theme.breakpoints.up('md')]: {
             width: '20ch',
         },
+        [theme.breakpoints.down('sm')]: {
+            width: '5ch',
+        },
     },
 }));
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const location = useLocation();
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const isMenuOpen = Boolean(anchorEl);
+    const isCatalogPage = location.pathname === '/furniture';
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -91,23 +100,25 @@ export default function PrimarySearchAppBar() {
                         sx={{
                             position: 'absolute',
                             left: 90,
-                            display: { xs: 'none', md: 'flex' },
+                            display: 'flex',
                         }}
                     >
                         <img src='../../../public/images/Furniture-Fusion-text.png' alt="Logo" style={{ height: '30px', width: 'auto' }} />
                     </IconButton>
-                    <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-                        <div className={styles.search}>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                                className={styles['styled-input-base']}
-                            />
-                            <div className={styles['search-icon-wrapper']}>
-                                <SearchIcon />
+                    {isCatalogPage && (
+                        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+                            <div className={styles.search}>
+                                <StyledInputBase
+                                    placeholder={isSmallScreen ? '' : 'Search…'}
+                                    inputProps={{ 'aria-label': 'search' }}
+                                    className={styles['styled-input-base']}
+                                />
+                                <div className={styles['search-icon-wrapper']}>
+                                    <SearchIcon />
+                                </div>
                             </div>
-                        </div>
-                    </Box>
+                        </Box>
+                    )}
                     <IconButton
                         size="large"
                         edge="end"

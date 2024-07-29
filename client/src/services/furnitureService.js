@@ -1,7 +1,7 @@
 // src/services/furnitureService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/furniture';
+const API_URL = 'http://localhost:3030/data/furniture';
 
 export const getFurnitureItems = async () => {
   const response = await axios.get(API_URL);
