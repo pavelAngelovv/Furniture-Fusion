@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,18 +16,41 @@ import styles from '../../../public/styles/Navbar.module.css';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
 import useAuth from '../../hooks/useAuth';
 
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
+    width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-        [theme.breakpoints.down('sm')]: {
-            width: '5ch',
+        [theme.breakpoints.up('sm')]: {
+            width: '12ch',
+            '&:focus': {
+                width: '20ch',
+            },
         },
     },
 }));
@@ -39,7 +62,7 @@ export default function PrimarySearchAppBar() {
     const theme = useTheme();
     const { isAuthenticated, logout } = useAuth();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    
+
     const isLoginPage = location.pathname === '/login';
     const isRegisterPage = location.pathname === '/register';
 
@@ -110,52 +133,50 @@ export default function PrimarySearchAppBar() {
     return (
         <Box className={styles.navbar}>
             <AppBar className={styles['app-bar']}>
-                <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ position: 'absolute', left: 16 }}
-                        onClick={handleDrawerOpen}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <TemporaryDrawer open={drawerOpen} onClose={handleDrawerClose} />
-                    <IconButton
-                        component="a"
-                        href="/"
-                        sx={{
-                            position: 'absolute',
-                            left: 90,
-                            display: 'flex',
-                        }}
-                    >
-                        <img src='../../../public/images/Furniture-Fusion-text.png' alt="Logo" style={{ height: '30px', width: 'auto' }} />
-                    </IconButton>
-                    {isCatalogPage && (
-                        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-                            <div className={styles.search}>
-                                <StyledInputBase
-                                    placeholder={isSmallScreen ? '' : 'Search…'}
-                                    inputProps={{ 'aria-label': 'search' }}
-                                    className={styles['styled-input-base']}
-                                />
-                                <div className={styles['search-icon-wrapper']}>
+                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            aria-label="open drawer"
+                            sx={{ marginRight: theme.spacing(2) }}
+                            onClick={handleDrawerOpen}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <TemporaryDrawer open={drawerOpen} onClose={handleDrawerClose} />
+                        {!isSmallScreen && (
+                            <IconButton
+                                component="a"
+                                href="/"
+                                sx={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <img src='../../../public/images/Furniture-Fusion-text.png' alt="Logo" style={{ height: '30px', width: 'auto' }} />
+                            </IconButton>
+                        )}
+                        {isCatalogPage && (
+                            <Search>
+                                <SearchIconWrapper>
                                     <SearchIcon />
-                                </div>
-                            </div>
-                        </Box>
-                    )}
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="Search…"
+                                    inputProps={{ 'aria-label': 'search' }}
+                                />
+                            </Search>
+                        )}
+                    </Box>
                     {isAuthenticated ? (
                         <Box
                             display="flex"
                             alignItems="center"
                             sx={{ position: 'relative', p: 1 }}
                         >
-                            <Box sx={{ mr: 2 }}>
-                                Hello {firstName} {lastName}
-                            </Box>
+                            {!isSmallScreen && (
+                                <Box sx={{ mr: 2, color: 'black' }}>
+                                    Hello {firstName} {lastName}
+                                </Box>
+                            )}
                             <IconButton
                                 size="large"
                                 edge="end"
@@ -163,17 +184,16 @@ export default function PrimarySearchAppBar() {
                                 aria-controls={menuId}
                                 aria-haspopup="true"
                                 onClick={handleProfileMenuOpen}
-                                color="inherit"
                             >
                                 <AccountCircle />
                             </IconButton>
                         </Box>
                     ) : !isLoginPage && !isRegisterPage ? (
                         <Box>
-                            <Button color="inherit" component={Link} to="/login">
+                            <Button component={Link} to="/login">
                                 Login
                             </Button>
-                            <Button color="inherit" component={Link} to="/register">
+                            <Button component={Link} to="/register">
                                 Register
                             </Button>
                         </Box>
