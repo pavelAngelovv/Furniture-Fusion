@@ -11,7 +11,9 @@ const FurnitureLiked = () => {
         const fetchLikedItems = async () => {
             try {
                 const likedItemIds = JSON.parse(localStorage.getItem('likedItems')) || [];
-                const items = await Promise.all(likedItemIds.map(id => getFurnitureItemById(id)));
+                // Filter out any null or invalid values
+                const validLikedItemIds = likedItemIds.filter(id => id);
+                const items = await Promise.all(validLikedItemIds.map(id => getFurnitureItemById(id)));
                 setLikedItems(items);
             } catch (error) {
                 console.error('Error fetching liked items', error);

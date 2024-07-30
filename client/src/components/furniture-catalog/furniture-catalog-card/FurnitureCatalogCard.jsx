@@ -1,8 +1,36 @@
 import PropTypes from 'prop-types';
-import { Card, CardContent, CardMedia, Typography, CardActions, Button } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, CardActions, Button, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useState, useEffect } from 'react';
 
 const FurnitureCatalogCard = ({ item }) => {
+  const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    checkIfLiked(item._id);
+  }, [item._id]);
+
+  const checkIfLiked = (itemId) => {
+    const likedItems = JSON.parse(localStorage.getItem('likedItems')) || [];
+    setLiked(likedItems.includes(itemId));
+  };
+
+  const toggleLike = () => {
+    const likedItems = JSON.parse(localStorage.getItem('likedItems')) || [];
+
+    if (likedItems.includes(item._id)) {
+      const updatedLikedItems = likedItems.filter(id => id !== item._id);
+      localStorage.setItem('likedItems', JSON.stringify(updatedLikedItems));
+      setLiked(false);
+    } else {
+      likedItems.push(item._id);
+      localStorage.setItem('likedItems', JSON.stringify(likedItems));
+      setLiked(true);
+    }
+  };
+
   return (
     <Card>
       <CardMedia
@@ -23,6 +51,13 @@ const FurnitureCatalogCard = ({ item }) => {
         <Button size="small" component={Link} to={`/furniture/${item._id}`}>
           View Details
         </Button>
+        <IconButton
+          variant="contained"
+          color={liked ? 'error' : 'default'}
+          onClick={toggleLike}
+        >
+          {liked ? <FavoriteIcon fontSize='large' /> : <FavoriteBorderIcon fontSize='large' />}
+        </IconButton>
       </CardActions>
     </Card>
   );
