@@ -60,10 +60,6 @@ const FurnitureDetails = () => {
                         <Typography variant="h6" component="div" sx={{ mb: 2, fontWeight: '1000', fontSize: '27px' }}>
                             ${furniture.price}
                         </Typography>
-                        <Typography variant="body2" component="div" sx={{ mb: 4 }}>
-                            <Rating name="half-rating" defaultValue={furniture.rating.rate} precision={0.1} />
-                            {` (${furniture.rating.count})`}
-                        </Typography>
 
                         <Grid container spacing={2} sx={{ ml: '-70px', mb: '3rem' }}>
                             <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -91,10 +87,15 @@ const FurnitureDetails = () => {
                                 </Typography>
                             </Grid>
                         </Grid>
-
-                        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-                            Add to Cart
-                        </Button>
+                        <Box sx={{ display: 'flex' }}>
+                            <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+                                Add to Cart
+                            </Button>
+                            <Typography variant="body2" component="div" sx={{ mb: 4 }}>
+                                <Rating name="half-rating" defaultValue={furniture.rating.rate} precision={0.1} />
+                                {` (${furniture.rating.count})`}
+                            </Typography>
+                        </Box>
                     </CardContent>
                 </Box>
             </Card>

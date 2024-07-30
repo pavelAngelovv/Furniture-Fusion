@@ -1,3 +1,5 @@
+/* Existing styles */
+
 .navbar {
     display: flex;
     width: 100%;
@@ -5,4 +7,42 @@
 
 .app-bar {
     position: static;
+}
+
+/* Center logo on small screens and adjust its position */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.logo-img {
+    height: 30px;
+    width: auto;
+}
+
+/* Styles for small screens */
+@media (max-width: 600px) {
+    .app-bar {
+        display: flex;
+        justify-content: center;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .logo-img {
+        transform: translateX(-10%); /* Adjust this value to move the logo left */
+    }
+}
+
+@media (min-width: 601px) {
+    .logo-container {
+        display: flex;
+        justify-content: flex-start; /* Align to the left on larger screens */
+    }
 }

@@ -30,16 +30,16 @@ function TemporaryDrawer({ open, onClose }) {
       <Divider />
       <List>
           <ListItem disablePadding>
-            <ListItemButton  color="inherit" component={Link} to="/login">
+            <ListItemButton  color="inherit" component={Link} to="/about">
               <ListItemIcon>
-              Login
+              About
               </ListItemIcon>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton  color="inherit" component={Link} to="/login">
+            <ListItemButton  color="inherit" component={Link} to="/contact">
               <ListItemIcon>
-              Register
+              Contact
               </ListItemIcon>
             </ListItemButton>
           </ListItem>
