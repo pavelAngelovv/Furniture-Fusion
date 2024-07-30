@@ -1,4 +1,4 @@
-// LoginForm.js
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { TextField, Button, Typography, Box } from '@mui/material';
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 const LoginForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { login } = useAuth(); // Call useAuth as a function
+    const [loginError, setLoginError] = useState(''); // State for login error
 
     const onSubmit = async (data) => {
         try {
@@ -17,10 +18,13 @@ const LoginForm = () => {
             console.log('Login successful:', response.data);
         } catch (error) {
             if (error.response) {
+                setLoginError(error.response.data.message || 'Login failed');
                 console.error('Login failed:', error.response.data);
             } else if (error.request) {
+                setLoginError('No response received from the server');
                 console.error('No response received:', error.request);
             } else {
+                setLoginError(error.message);
                 console.error('Error:', error.message);
             }
         }
@@ -41,6 +45,12 @@ const LoginForm = () => {
             <Typography variant="h4" gutterBottom>
                 Login
             </Typography>
+
+            {loginError && (
+                <Typography color="error" gutterBottom>
+                    {loginError}
+                </Typography>
+            )}
 
             {/* Email */}
             <TextField
