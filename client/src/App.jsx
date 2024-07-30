@@ -8,6 +8,7 @@ import Register from './components/register/Register';
 import Login from './components/login/Login';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import FurnitureLiked from './components/furniture-liked/FurnitureLiked';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/" exact element={<Home />} />
             <Route path="/furniture" element={<FurnitureCatalog />} />
             <Route path="/furniture/:id" element={<FurnitureDetails />} />
+            <Route path="/furniture/liked" element={<FurnitureLiked />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route

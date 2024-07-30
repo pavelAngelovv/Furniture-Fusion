@@ -8,7 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Button, useMediaQuery, useTheme } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
 import useAuth from '../../hooks/useAuth';
 import styles from '../../../public/styles/navbar.module.css';  // Ensure the filename is correct
@@ -25,7 +26,6 @@ export default function PrimarySearchAppBar() {
     const isRegisterPage = location.pathname === '/register';
 
     const firstName = localStorage.getItem('firstName') || '';
-    const lastName = localStorage.getItem('lastName') || '';
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -86,7 +86,7 @@ export default function PrimarySearchAppBar() {
     return (
         <Box className={styles.navbar}>
             <AppBar className={styles['app-bar']}>
-                <Toolbar sx={{ display: 'flex', justifyContent: isSmallScreen ? 'center' : 'space-between' }}>
+                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     {isSmallScreen && (
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <IconButton
@@ -102,7 +102,7 @@ export default function PrimarySearchAppBar() {
                             <TemporaryDrawer open={drawerOpen} onClose={handleDrawerClose} />
                         </Box>
                     )}
-                    <Box className={styles['logo-container']}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <IconButton
                             component="a"
                             href="/"
@@ -111,41 +111,43 @@ export default function PrimarySearchAppBar() {
                             <img src='../../../public/images/Furniture-Fusion-text.png' alt="Logo" className={styles['logo-img']} />
                         </IconButton>
                         {!isSmallScreen && (
-                        <Box sx={{ ml: '2rem', mt: '5px' }}>
-                            <Button sx={{ color: 'white' }} component={Link} to="/catalog">
-                                Catalog
-                            </Button>
-                            <Button sx={{ color: 'white' }} component={Link} to="/about-us">
-                                About us
-                            </Button>
-                        </Box>
+                            <Box sx={{ ml: '2rem' }}>
+                                <Button sx={{ color: 'white' }} component={Link} to="/about-us">
+                                    About us
+                                </Button>
+                                <Button sx={{ color: 'white' }} component={Link} to="/furniture">
+                                    Catalog
+                                </Button>
+                            </Box>
+                        )}
+                        {!isSmallScreen && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', ml: '1rem' }}>
+                                <IconButton
+                                    size='small'
+                                    component={Link}
+                                    to={'/furniture/liked'}
+                                    sx={{ color: 'white', ":hover": { backgroundColor: 'inherit' } }}
+                                    aria-label="liked furniture"
+                                >
+                                    <FavoriteBorderIcon />
+                                </IconButton>
+                            </Box>
                         )}
                     </Box>
-                        <Box>
-                            {isAuthenticated ? (
-                                <Box
-                                    display="flex"
-                                    alignItems="center"
-                                    sx={{ position: 'relative', p: 1 }}
-                                >
-                                    <Box sx={{ mr: 2, color: 'black' }}>
-                                        Hello {firstName} {lastName}
-                                    </Box>
-                                    <IconButton
-                                        size="large"
-                                        edge="end"
-                                        aria-label="account of current user"
-                                        aria-controls={menuId}
-                                        aria-haspopup="true"
-                                        onClick={handleProfileMenuOpen}
-                                    >
-                                        <AccountCircle />
-                                    </IconButton>
-                                </Box>
-                            ) : !isLoginPage && !isRegisterPage && (
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {isAuthenticated && !isSmallScreen ? (
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                sx={{ position: 'relative', p: 1, width: 'auto' }} // Ensure enough width
+                            >
+                                <Typography sx={{ mr: 2, color: 'inherit', whiteSpace: 'nowrap' }}> {/* Prevent text wrapping */}
+                                    Hello {firstName}
+                                </Typography>
                                 <IconButton
                                     size="large"
                                     edge="end"
+                                    color='inherit'
                                     aria-label="account of current user"
                                     aria-controls={menuId}
                                     aria-haspopup="true"
@@ -153,9 +155,38 @@ export default function PrimarySearchAppBar() {
                                 >
                                     <AccountCircle />
                                 </IconButton>
-                            )}
-                        </Box>
-                    
+                            </Box>
+
+                        ) : !isLoginPage && !isRegisterPage && (
+                            <>
+                                {isSmallScreen && (
+                                    <Box sx={{ ml: 'auto' }}>
+                                        <IconButton
+                                            size='small'
+                                            component={Link}
+                                            to={'/furniture/liked'}
+                                            sx={{ color: 'white', ":hover": { backgroundColor: 'inherit' } }}
+                                            aria-label="liked furniture"
+                                        >
+                                            <FavoriteBorderIcon />
+                                        </IconButton>
+                                    </Box>
+                                )}
+
+                                <IconButton
+                                    size="large"
+                                    edge="end"
+                                    color='inherit'
+                                    aria-label="account of current user"
+                                    aria-controls={menuId}
+                                    aria-haspopup="true"
+                                    onClick={handleProfileMenuOpen}
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                            </>
+                        )}
+                    </Box>
                 </Toolbar>
             </AppBar>
             {renderMenu}

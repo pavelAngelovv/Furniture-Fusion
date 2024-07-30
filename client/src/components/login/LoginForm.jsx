@@ -13,8 +13,8 @@ const LoginForm = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:3030/users/login', data);
-            const { accessToken, firstName, lastName } = response.data;
-            login(accessToken, firstName, lastName); // Now login should be defined as a function
+            const { accessToken, firstName } = response.data;
+            login(accessToken, firstName); // Now login should be defined as a function
             console.log('Login successful:', response.data);
         } catch (error) {
             if (error.response) {

@@ -13,11 +13,10 @@ const RegisterForm = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:3030/users/register', data);
-            const { accessToken, firstName, lastName } = response.data;
+            const { accessToken, firstName } = response.data;
 
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('firstName', firstName);
-            localStorage.setItem('lastName', lastName);
             navigate('/')
             console.log('Registration successful:', response.data);
         } catch (error) {

@@ -34,10 +34,6 @@
         justify-content: center;
         width: 100%;
     }
-
-    .logo-img {
-        transform: translateX(-10%); /* Adjust this value to move the logo left */
-    }
 }
 
 @media (min-width: 601px) {
