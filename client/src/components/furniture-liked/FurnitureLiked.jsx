@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Typography, Grid, Card, CardMedia, CardContent, Box, CircularProgress } from '@mui/material';
+import { Container, Grid, Box, CircularProgress } from '@mui/material';
 import { getFurnitureItemById } from '../../services/furnitureService';
 import FurnitureCatalogCard from '../furniture-catalog/furniture-catalog-card/FurnitureCatalogCard';
 
