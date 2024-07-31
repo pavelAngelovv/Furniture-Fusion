@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Grid, Box, CircularProgress } from '@mui/material';
+import { Container, Grid, Box, CircularProgress, Typography } from '@mui/material';
 import { getFurnitureItemById } from '../../services/furnitureService';
 import FurnitureCatalogCard from '../furniture-catalog/furniture-catalog-card/FurnitureCatalogCard';
 
@@ -41,13 +41,28 @@ const FurnitureLiked = () => {
 
     return (
         <Container sx={{ marginTop: { xs: '20%', sm: '17%', md: '8%' } }}>
-            <Grid container spacing={4}>
-                {likedItems.map((item) => (
-                    <Grid item key={item._id} xs={12} sm={6} md={4}>
-                        <FurnitureCatalogCard item={item} />
-                    </Grid>
-                ))}
-            </Grid>
+            {likedItems.length === 0 ? (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '40vh'
+                    }}
+                >
+                    <Typography variant="h6" align="center">
+                        You have no liked items yet.
+                    </Typography>
+                </Box>
+            ) : (
+                <Grid container spacing={4}>
+                    {likedItems.map((item) => (
+                        <Grid item key={item._id} xs={12} sm={6} md={4}>
+                            <FurnitureCatalogCard item={item} />
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
         </Container>
     );
 };

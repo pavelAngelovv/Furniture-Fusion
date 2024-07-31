@@ -11,6 +11,7 @@ function AboutUs() {
         backgroundPosition: 'center',
         minHeight: '100vh',
         padding: 4,
+        mt: '3rem',
         color: 'white',
       }}
     >
