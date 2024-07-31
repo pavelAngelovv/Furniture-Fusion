@@ -11,7 +11,7 @@ const FurnitureCreate = () => {
                 backgroundPosition: 'center',
                 minHeight: '100vh',
                 padding: 4,
-                mt: '4rem'
+                mt: '3.5rem'
             }}
         >
             <FurnitureCreateForm />

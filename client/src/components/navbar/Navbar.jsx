@@ -159,7 +159,7 @@ export default function PrimarySearchAppBar() {
                                 sx={{ position: 'relative', p: 1, width: 'auto' }}
                             >
                                 <Typography sx={{ mr: 2, color: 'inherit', whiteSpace: 'nowrap' }}>
-                                    Hello {firstName}
+                                    Hello, {firstName}
                                 </Typography>
                                 <IconButton
                                     size="large"
