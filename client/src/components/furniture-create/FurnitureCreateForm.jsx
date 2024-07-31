@@ -1,28 +1,113 @@
-// src/components/CreateFurnitureForm.jsx
-import { useForm } from 'react-hook-form';
-import { TextField, Button, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { createFurnitureItem } from '../../services/furnitureService'; // Updated import
+import { useForm, Controller } from 'react-hook-form';
+import { createFurnitureItem } from '../../services/furnitureService';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+
+const CATEGORIES = ["Seating", "Tables", "Storage", "Beds", "Office", "Decor"];
+const MATERIALS = ["Wood", "Glass", "Leather", "Fabric"];
 
 const CreateFurnitureForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            title: '',
+            description: '',
+            material: '',
+            category: '',
+            image: ''
+        }
+    });
+
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
+        const formattedData = {
+            ...data,
+            dimensions: {
+                length: parseFloat(data.dimensions.length),
+                width: parseFloat(data.dimensions.width),
+                height: parseFloat(data.dimensions.height)
+            }
+        };
+
         try {
-            const response = await createFurnitureItem(data); // Use the service function
+            const response = await createFurnitureItem(formattedData);
             console.log('Furniture item created successfully:', response);
             navigate('/furniture');
         } catch (error) {
-            if (error.response) {
-                console.error('Creation failed:', error.response.data);
-            } else if (error.request) {
-                console.error('No response received:', error.request);
-            } else {
-                console.error('Error:', error.message);
-            }
+            console.error('Creation failed:', error.response?.data || error.message);
         }
     };
+
+    const getNestedError = (name) => {
+        const parts = name.split('.');
+        return parts.length === 2
+            ? errors[parts[0]]?.[parts[1]]
+            : errors[name];
+    };
+
+    const renderTextField = (name, label, type = 'text', rules) => {
+        const error = getNestedError(name);
+
+        return (
+            <Controller
+                name={name}
+                control={control}
+                rules={rules}
+                render={({ field }) => (
+                    <TextField
+                        fullWidth
+                        margin="normal"
+                        label={label}
+                        type={type}
+                        {...field}
+                        error={!!error}
+                        helperText={error?.message}
+                        value={field.value || ''}
+                        InputProps={{
+                            inputProps: { min: 0 }
+                        }}
+                    />
+                )}
+            />
+        );
+    };
+
+    const renderSelectField = (name, label, options, rules) => (
+        <FormControl fullWidth margin="normal" error={!!errors[name]}>
+            <InputLabel>{label}</InputLabel>
+            <Controller
+                name={name}
+                control={control}
+                rules={rules}
+                render={({ field }) => (
+                    <Select
+                        {...field}
+                        label={label}
+                        value={field.value || ''}
+                    >
+                        {options.map(option => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                )}
+            />
+            {errors[name] && (
+                <Typography variant="body2" color="error">
+                    {errors[name].message}
+                </Typography>
+            )}
+        </FormControl>
+    );
 
     return (
         <Box
@@ -33,94 +118,57 @@ const CreateFurnitureForm = () => {
                 margin: '0 auto',
                 p: 3,
                 borderRadius: 2,
-                boxShadow: 3
+                boxShadow: 3,
+                backgroundColor: 'white'
             }}
         >
             <Typography variant="h4" gutterBottom>
                 Create Furniture Item
             </Typography>
 
-            <TextField
-                fullWidth
-                margin="normal"
-                id="title"
-                label="Title"
-                {...register('title', { required: 'Title is required' })}
-                error={!!errors.title}
-                helperText={errors.title?.message}
-            />
+            {renderTextField('title', 'Title', 'text', { required: 'Title is required' })}
+            {renderTextField('description', 'Description', 'text', { required: 'Description is required' })}
 
-            <TextField
-                fullWidth
-                margin="normal"
-                id="description"
-                label="Description"
-                {...register('description', { required: 'Description is required' })}
-                error={!!errors.description}
-                helperText={errors.description?.message}
-            />
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    {renderTextField('price', 'Price', 'number', { required: 'Price is required' })}
+                </Grid>
+                <Grid item xs={6}>
+                    {renderTextField('weight', 'Weight (kg)', 'number', { required: 'Weight is required' })}
+                </Grid>
+            </Grid>
 
-            <TextField
-                fullWidth
-                margin="normal"
-                id="price"
-                label="Price"
-                type="number"
-                {...register('price', { required: 'Price is required', valueAsNumber: true })}
-                error={!!errors.price}
-                helperText={errors.price?.message}
-            />
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    {renderSelectField('material', 'Material', MATERIALS, { required: 'Material is required' })}
+                </Grid>
+                <Grid item xs={6}>
+                    {renderSelectField('category', 'Category', CATEGORIES, { required: 'Category is required' })}
+                </Grid>
+            </Grid>
 
-            <TextField
-                fullWidth
-                margin="normal"
-                id="category"
-                label="Category"
-                {...register('category', { required: 'Category is required' })}
-                error={!!errors.category}
-                helperText={errors.category?.message}
-            />
+            <Grid container spacing={2}>
+                <Grid item xs={4}>
+                    {renderTextField('dimensions.length', 'Length (cm)', 'number', {
+                        required: 'Length is required',
+                        min: { value: 0, message: 'Length must be a positive number' }
+                    })}
+                </Grid>
+                <Grid item xs={4}>
+                    {renderTextField('dimensions.width', 'Width (cm)', 'number', {
+                        required: 'Width is required',
+                        min: { value: 0, message: 'Width must be a positive number' }
+                    })}
+                </Grid>
+                <Grid item xs={4}>
+                    {renderTextField('dimensions.height', 'Height (cm)', 'number', {
+                        required: 'Height is required',
+                        min: { value: 0, message: 'Height must be a positive number' }
+                    })}
+                </Grid>
+            </Grid>
 
-            <TextField
-                fullWidth
-                margin="normal"
-                id="material"
-                label="Material"
-                {...register('material', { required: 'Material is required' })}
-                error={!!errors.material}
-                helperText={errors.material?.message}
-            />
-
-            <TextField
-                fullWidth
-                margin="normal"
-                id="weight"
-                label="Weight (kg)"
-                type="number"
-                {...register('weight', { required: 'Weight is required', valueAsNumber: true })}
-                error={!!errors.weight}
-                helperText={errors.weight?.message}
-            />
-
-            <TextField
-                fullWidth
-                margin="normal"
-                id="dimensions"
-                label="Dimensions (L x W x H) cm"
-                {...register('dimensions', { required: 'Dimensions are required' })}
-                error={!!errors.dimensions}
-                helperText={errors.dimensions?.message}
-            />
-
-            <TextField
-                fullWidth
-                margin="normal"
-                id="image"
-                label="Image URL"
-                {...register('image', { required: 'Image URL is required' })}
-                error={!!errors.image}
-                helperText={errors.image?.message}
-            />
+            {renderTextField('image', 'Image URL', 'text', { required: 'Image URL is required' })}
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
                 <Button
@@ -138,7 +186,7 @@ const CreateFurnitureForm = () => {
                     Cancel
                 </Button>
             </Box>
-        </Box >
+        </Box>
     );
 };
 

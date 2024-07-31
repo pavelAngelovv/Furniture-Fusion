@@ -1,23 +1,25 @@
-// RegisterForm.js
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { TextField, Button, Typography, Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from '../../contexts/AuthContext';
 
 const RegisterForm = () => {
-    // Initialize useForm
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext); // Use AuthContext
 
-    // Function to handle form submission
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:3030/users/register', data);
             const { accessToken, firstName } = response.data;
 
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('firstName', firstName);
-            navigate('/')
+            login(accessToken, firstName); // Update AuthContext
+            navigate('/');
             console.log('Registration successful:', response.data);
         } catch (error) {
             if (error.response) {
@@ -46,7 +48,6 @@ const RegisterForm = () => {
                 Register
             </Typography>
 
-            {/* First Name */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -57,7 +58,6 @@ const RegisterForm = () => {
                 helperText={errors.firstName?.message}
             />
 
-            {/* Last Name */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -68,7 +68,6 @@ const RegisterForm = () => {
                 helperText={errors.lastName?.message}
             />
 
-            {/* Email */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -86,7 +85,6 @@ const RegisterForm = () => {
                 helperText={errors.email?.message}
             />
 
-            {/* Password */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -104,7 +102,6 @@ const RegisterForm = () => {
                 helperText={errors.password?.message}
             />
 
-            {/* Confirm Password */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -119,7 +116,6 @@ const RegisterForm = () => {
                 helperText={errors.confirmPassword?.message}
             />
 
-            {/* Phone Number */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -129,7 +125,7 @@ const RegisterForm = () => {
                 {...register('phoneNumber', {
                     required: 'Phone number is required',
                     pattern: {
-                        value: /^[0-9]{10}$/, // Adjust pattern as needed
+                        value: /^[0-9]{10}$/,
                         message: 'Phone number must be 10 digits',
                     },
                 })}
@@ -137,7 +133,6 @@ const RegisterForm = () => {
                 helperText={errors.phoneNumber?.message}
             />
 
-            {/* Submit Button */}
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
                 <Button
                     type="submit"
@@ -150,7 +145,7 @@ const RegisterForm = () => {
                     Already have an account? Click <Link to={'/login'}>here</Link> to log in.
                 </Typography>
             </Box>
-        </Box >
+        </Box>
     );
 };
 

@@ -1,22 +1,23 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
 import useAuth from '../../hooks/useAuth';
-import styles from '../../../public/styles/navbar.module.css';  // Ensure the filename is correct
+import styles from '../../../public/styles/navbar.module.css';
 
 export default function PrimarySearchAppBar() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const location = useLocation();
     const theme = useTheme();
     const { isAuthenticated, logout } = useAuth();
@@ -68,7 +69,7 @@ export default function PrimarySearchAppBar() {
                 </MenuItem>,
                 <MenuItem key="logout" onClick={() => {
                     handleMenuClose();
-                    logout(); // Call the logout function
+                    logout();
                 }}>
                     Logout
                 </MenuItem>
@@ -85,7 +86,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <Box className={styles.navbar}>
-            <AppBar className={styles['app-bar']}>
+            <AppBar sx={{ backgroundColor: 'black' }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     {isSmallScreen && (
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -108,7 +109,7 @@ export default function PrimarySearchAppBar() {
                             href="/"
                             sx={{ display: 'flex', alignItems: 'center' }}
                         >
-                            <img src='../../../public/images/Furniture-Fusion-text.png' alt="Logo" className={styles['logo-img']} />
+                            <img src='../../../public/images/Furniture-Fusion-Text-White.png' alt="Logo" className={styles['logo-img']} />
                         </IconButton>
                         {!isSmallScreen && (
                             <Box sx={{ ml: '2rem' }}>
@@ -120,7 +121,7 @@ export default function PrimarySearchAppBar() {
                                 </Button>
                             </Box>
                         )}
-                        {!isSmallScreen && (
+                        {!isSmallScreen && isAuthenticated && (
                             <Box sx={{ display: 'flex', alignItems: 'center', ml: '1rem' }}>
                                 <IconButton
                                     size='small'
@@ -131,6 +132,22 @@ export default function PrimarySearchAppBar() {
                                 >
                                     <FavoriteBorderIcon />
                                 </IconButton>
+                                <Button
+                                    size='small'
+                                    component={Link}
+                                    to={'/furniture/create'}
+                                    sx={{
+                                        color: 'black',
+                                        outline: 1,
+                                        ml: '2rem',
+                                        backgroundColor: 'white',
+                                        ":hover": { backgroundColor: 'inherit' },
+                                    }}
+                                    aria-label="add furniture"
+                                >
+                                    <AddCircleOutlineOutlinedIcon />
+                                    <Typography sx={{ fontWeight: 700, p: '2px' }}> Add Furniture</Typography>
+                                </Button>
                             </Box>
                         )}
                     </Box>
@@ -139,9 +156,9 @@ export default function PrimarySearchAppBar() {
                             <Box
                                 display="flex"
                                 alignItems="center"
-                                sx={{ position: 'relative', p: 1, width: 'auto' }} // Ensure enough width
+                                sx={{ position: 'relative', p: 1, width: 'auto' }}
                             >
-                                <Typography sx={{ mr: 2, color: 'inherit', whiteSpace: 'nowrap' }}> {/* Prevent text wrapping */}
+                                <Typography sx={{ mr: 2, color: 'inherit', whiteSpace: 'nowrap' }}>
                                     Hello {firstName}
                                 </Typography>
                                 <IconButton
@@ -156,7 +173,6 @@ export default function PrimarySearchAppBar() {
                                     <AccountCircle />
                                 </IconButton>
                             </Box>
-
                         ) : !isLoginPage && !isRegisterPage && (
                             <>
                                 {isSmallScreen && (
@@ -172,7 +188,6 @@ export default function PrimarySearchAppBar() {
                                         </IconButton>
                                     </Box>
                                 )}
-
                                 <IconButton
                                     size="large"
                                     edge="end"

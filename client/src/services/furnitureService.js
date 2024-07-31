@@ -13,8 +13,15 @@ export const getFurnitureItemById = async (id) => {
   return response.data;
 };
 
-export const createFurnitureItem = async (item) => {
-  const response = await axios.post(API_URL, item);
+
+export const createFurnitureItem = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const headers = {
+      'X-Authorization': token,
+      'Content-Type': 'application/json'
+  };
+  
+  const response = await axios.post(`${API_URL}`, data, { headers });
   return response.data;
 };
 

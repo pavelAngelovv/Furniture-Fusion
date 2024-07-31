@@ -10,6 +10,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import FurnitureLiked from './components/furniture-liked/FurnitureLiked';
 import FurnitureCreate from './components/furniture-create/FurnitureCreate';
+import AboutUs from './components/about-us/AboutUs';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/furniture/:id" element={<FurnitureDetails />} />
             <Route path="/furniture/liked" element={<FurnitureLiked />} />
             <Route path="/furniture/create" element={<FurnitureCreate />} />
+            <Route path="/about-us" element={<AboutUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route
