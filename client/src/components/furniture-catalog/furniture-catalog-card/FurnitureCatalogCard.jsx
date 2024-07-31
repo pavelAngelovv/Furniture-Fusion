@@ -1,12 +1,5 @@
 import PropTypes from 'prop-types';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
+import { Card, CardContent, CardMedia, Typography, CardActions, Button, IconButton, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -38,6 +31,13 @@ const FurnitureCatalogCard = ({ item }) => {
     }
   };
 
+  const truncateDescription = (description, maxLength) => {
+    if (description.length <= maxLength) return description;
+    return description.slice(0, maxLength) + '...';
+  };
+
+  const maxDescriptionLength = 49;
+
   return (
     <Card>
       <CardMedia
@@ -51,7 +51,7 @@ const FurnitureCatalogCard = ({ item }) => {
           {item.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {item.description}
+          {truncateDescription(item.description, maxDescriptionLength)}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between' }}>
