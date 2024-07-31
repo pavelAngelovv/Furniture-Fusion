@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/BContainerox';
+import Container from '@mui/material/Container';
 
 function AboutUs() {
   return (
