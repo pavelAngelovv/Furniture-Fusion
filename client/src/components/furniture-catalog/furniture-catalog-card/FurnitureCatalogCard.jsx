@@ -1,5 +1,12 @@
 import PropTypes from 'prop-types';
-import { Card, CardContent, CardMedia, Typography, CardActions, Button, IconButton } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -47,16 +54,18 @@ const FurnitureCatalogCard = ({ item }) => {
           {item.description}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ justifyContent: 'space-between' }}>
         <Button size="small" component={Link} to={`/furniture/${item._id}`}>
           View Details
         </Button>
+        <Box sx={{ flexGrow: 1 }} />
         <IconButton
           variant="contained"
           color={liked ? 'error' : 'default'}
           onClick={toggleLike}
+          sx={{ marginLeft: 'auto' }}
         >
-          {liked ? <FavoriteIcon fontSize='large' /> : <FavoriteBorderIcon fontSize='large' />}
+          {liked ? <FavoriteIcon fontSize="large" /> : <FavoriteBorderIcon fontSize="large" />}
         </IconButton>
       </CardActions>
     </Card>
