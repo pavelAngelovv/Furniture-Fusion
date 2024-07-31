@@ -1354,10 +1354,6 @@
                 },
                 "weight": 5,
                 "image": "https://i.ebayimg.com/images/g/gvsAAOSwzJ5XavzO/s-l640.jpg",
-                "rating": {
-                    "rate": 4.5,
-                    "count": 10
-                }
             },
             "00445b80-12c3-4f5b-81b8-8d957ef3257f": {
                 "title": "Modern Table",
@@ -1372,10 +1368,6 @@
                 },
                 "weight": 20,
                 "image": "https://i5.walmartimages.com/asr/71e61375-a11e-4487-bb4b-847f6a70cfbb.20458d232b4c21d46b6618ea1f2987a2.jpeg",
-                "rating": {
-                    "rate": 4.8,
-                    "count": 5
-                }
             },
             "a4466247-a409-4a5f-9b47-56a01d294966": {
                 "title": "Leather Sofa",
@@ -1390,10 +1382,6 @@
                 },
                 "weight": 50,
                 "image": "https://a.1stdibscdn.com/archivesE/upload/f_9333/f_4047333/Bank_01_2732_x_1872__z.jpg",
-                "rating": {
-                    "rate": 4.7,
-                    "count": 20
-                }
             },
             "dfda2d52-8f04-4e49-a72f-a990d3999871": {
                 "title": "Glass Shelf",
@@ -1408,10 +1396,6 @@
                 },
                 "weight": 10,
                 "image": "https://gotohomerepair.com/wp-content/uploads/2017/08/glass-shelving-bronze-glass-shelf-bracket-supports-design-inside-floating-glass-shelves.jpg",
-                "rating": {
-                    "rate": 4.4,
-                    "count": 15
-                }
             },
             "e22462fe-c259-47ed-9561-741ebdaffec4": {
                 "title": "Wooden Bed",
@@ -1426,10 +1410,6 @@
                 },
                 "weight": 70,
                 "image": "https://www.homestratosphere.com/wp-content/uploads/2014/11/panelbed.jpeg",
-                "rating": {
-                    "rate": 4.6,
-                    "count": 8
-                }
             },
             "9fed7cea-25a9-4df2-991f-6456c3510395": {
                 "title": "Wood Desk",
@@ -1444,10 +1424,6 @@
                 },
                 "weight": 25,
                 "image": "https://i5.walmartimages.com/asr/1c6f83e0-63ae-4000-9ae8-a5c13e3a28cc_1.0746d457391715a53759ed4a24405094.jpeg",
-                "rating": {
-                    "rate": 4.3,
-                    "count": 12
-                }
             },
             "a56f685b-386f-446f-9c37-4130c126dbcf": {
                 "title": "Rug",
@@ -1462,10 +1438,6 @@
                 },
                 "weight": 5,
                 "image": "https://www.dshop.com.au/assets/full/4181-T.jpg?1526448787",
-                "rating": {
-                    "rate": 4.9,
-                    "count": 25
-                }
             },
             "41889505-d828-48ac-83cc-16b25d209751": {
                 "title": "Dining Table",
@@ -1480,10 +1452,6 @@
                 },
                 "weight": 40,
                 "image": "https://ombakfurniture.com/wp-content/uploads/2014/11/Sakra-reclaimed-wood-dining-table2-1.jpg",
-                "rating": {
-                    "rate": 4.6,
-                    "count": 7
-                }
             },
             "7d88d492-d1eb-4fff-95a5-ed9b31c3525d": {
                 "title": "Office Chair",
@@ -1498,10 +1466,6 @@
                 },
                 "weight": 15,
                 "image": "https://i5.walmartimages.com/asr/46afd530-7838-414b-824e-26ab97fa46f4_1.4fc1c8c00e07ac86aabcc0e381a2fa22.jpeg",
-                "rating": {
-                    "rate": 4.2,
-                    "count": 18
-                }
             },
             "da15d2a6-be21-4ba8-8f37-97feb1fcc404": {
                 "title": "Bookcase",
@@ -1516,10 +1480,6 @@
                 },
                 "weight": 40,
                 "image": "https://themprojects.com/wp-content/uploads/2017/08/appealing-wood-bookcase-with-doors-solid-wood-construction-natural-for-large-solid-wood-bookcase.jpg",
-                "rating": {
-                    "rate": 4.5,
-                    "count": 9
-                }
             },
             "d80bb632-a041-4bb2-b103-b5c9aa7c06c8": {
                 "title": "Coffee Table",
@@ -1534,10 +1494,6 @@
                 },
                 "weight": 15,
                 "image": "https://wallsdesk.com/wp-content/uploads/2016/04/Trendy-Modern-Glass-Coffee-Table.jpg",
-                "rating": {
-                    "rate": 4.7,
-                    "count": 14
-                }
             }
         },
 
