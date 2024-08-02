@@ -175,7 +175,7 @@ export default function PrimarySearchAppBar() {
                             </Box>
                         ) : !isLoginPage && !isRegisterPage && (
                             <>
-                                {isSmallScreen && (
+                                {isSmallScreen && isAuthenticated && (
                                     <Box sx={{ ml: 'auto' }}>
                                         <IconButton
                                             size='small'

@@ -10,13 +10,17 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { getFurnitureItemById } from '../../services/furnitureService';
+import useAuth from '../../hooks/useAuth';
 
 const FurnitureDetails = () => {
     const { id: furnitureId } = useParams();
     const [furniture, setFurniture] = useState(null);
     const [liked, setLiked] = useState(false);
+
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -84,17 +88,56 @@ const FurnitureDetails = () => {
 
                 <Box sx={{ flex: 1, p: 2 }}>
                     <CardContent>
-                        <Typography variant="h4" component="div" sx={{ fontWeight: '700', mb: '10px' }}>
+                        <Typography
+                            variant="h4"
+                            component="div"
+                            sx={{
+                                width: '300px',
+                                wordWrap: 'break-word',
+                                fontWeight: '700',
+                                mb: '30px'
+                            }}
+                        >
                             {furniture.title}
                         </Typography>
-                        <Typography variant="h6" component="div" sx={{ mb: '30px', fontWeight: '5', fontSize: '27px' }}>
-                            ${furniture.price}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{ mb: '50px', fontSize: '17px' }}>
+
+                        <Box sx={{ display: 'flex', alignItems: 'center', mb: '40px' }}>
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{
+                                    fontWeight: '500',
+                                    fontSize: '27px',
+                                    mr: 'auto'
+                                }}
+                            >
+                                ${furniture.price}
+                            </Typography>
+                            {isAuthenticated && (
+                                <IconButton
+                                    variant="contained"
+                                    color={liked ? 'error' : 'info'}
+                                    onClick={toggleLike}
+                                >
+                                    {liked ? <FavoriteIcon fontSize='large' /> : <FavoriteBorderIcon fontSize='large' />}
+                                </IconButton>
+                            )}
+                        </Box>
+
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            width='300px'
+                            sx={{
+                                mb: '50px',
+                                wordWrap: 'break-word',
+                                fontSize: '17px'
+                            }}
+                        >
                             {furniture.description}
                         </Typography>
 
-                        <Grid container spacing={2} sx={{ ml: {xs: '-60px', sm: '-30px', md: '-70px'}, mb: '3rem' }}>
+                        <Grid container spacing={2} sx={{ mb: '3rem' }}>
                             <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <img src='../../../public/images/categorization.png' alt="Category" style={{ height: '30px', width: 'auto' }} />
                                 <Typography variant="body2" component="div" sx={{ mt: 1, textAlign: 'center' }}>
@@ -120,14 +163,26 @@ const FurnitureDetails = () => {
                                 </Typography>
                             </Grid>
                         </Grid>
-                        <Box sx={{ display: 'flex', alignItems: 'center', ':focus': 'outline' }}>
-                            <IconButton
-                                variant="contained"
-                                color={liked ? 'error' : 'info'}
-                                onClick={toggleLike}
-                            >
-                                {liked ? <FavoriteIcon fontSize='large' /> : <FavoriteBorderIcon fontSize='large' />}
-                            </IconButton>
+
+                        {/* Owner Data Section */}
+                        <Box sx={{ mt: '2rem' }}>
+                            <Box sx={{ display: 'flex', mb: '10px' }}>
+                                <Typography variant="h6" component="div" sx={{ fontWeight: '700' }}>
+                                    Contact Owner
+                                </Typography>
+                                <Box sx={{ marginY: '5px', marginX: '8px' }}>
+                                    <ConnectWithoutContactIcon />
+                                </Box>
+                            </Box>
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: '10px' }}>
+                                {furniture.ownerData.firstName} {furniture.ownerData.lastName}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: '10px' }}>
+                                {furniture.ownerData.phoneNumber}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {furniture.ownerData.email}
+                            </Typography>
                         </Box>
                     </CardContent>
                 </Box>

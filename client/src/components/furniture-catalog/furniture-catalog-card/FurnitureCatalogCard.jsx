@@ -1,12 +1,21 @@
 import PropTypes from 'prop-types';
-import { Card, CardContent, CardMedia, Typography, CardActions, Button, IconButton, Box } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState, useEffect } from 'react';
+import useAuth from '../../../hooks/useAuth';
 
 const FurnitureCatalogCard = ({ item }) => {
   const [liked, setLiked] = useState(false);
+
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     checkIfLiked(item._id);
@@ -31,13 +40,6 @@ const FurnitureCatalogCard = ({ item }) => {
     }
   };
 
-  const truncateDescription = (description, maxLength) => {
-    if (description.length <= maxLength) return description;
-    return description.slice(0, maxLength) + '...';
-  };
-
-  const maxDescriptionLength = 49;
-
   return (
     <Card>
       <CardMedia
@@ -47,26 +49,46 @@ const FurnitureCatalogCard = ({ item }) => {
         alt={item.title}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: '100%'  // Ensures it applies to the full width of the parent container
+          }}
+        >
           {item.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {truncateDescription(item.description, maxDescriptionLength)}
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: '100%'  // Ensures it applies to the full width of the parent container
+          }}
+        >
+          {item.description}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between' }}>
         <Button size="small" component={Link} to={`/furniture/${item._id}`}>
           View Details
         </Button>
-        <Box sx={{ flexGrow: 1 }} />
-        <IconButton
-          variant="contained"
-          color={liked ? 'error' : 'default'}
-          onClick={toggleLike}
-          sx={{ marginLeft: 'auto' }}
-        >
-          {liked ? <FavoriteIcon fontSize="large" /> : <FavoriteBorderIcon fontSize="large" />}
-        </IconButton>
+        {isAuthenticated && (
+          <IconButton
+            variant="contained"
+            color={liked ? 'error' : 'default'}
+            onClick={toggleLike}
+            sx={{ marginLeft: 'auto' }}
+          >
+            {liked ? <FavoriteIcon fontSize="large" /> : <FavoriteBorderIcon fontSize="large" />}
+          </IconButton>
+        )}
       </CardActions>
     </Card>
   );

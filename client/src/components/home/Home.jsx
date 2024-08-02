@@ -9,12 +9,13 @@ const Home = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              mt: '3rem'
             }}
           >
             <img
               src='../../../public/images/Furniture-Fusion-logo.png'
               alt="Logo"
-              style={{ height: '800px', width: 'auto' }}
+              style={{ height: '390px', width: 'auto' }}
             />
           </Box>
     );

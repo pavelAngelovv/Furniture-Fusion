@@ -15,8 +15,10 @@ import GridOnOutlinedIcon from '@mui/icons-material/GridOnOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ContactPhoneOutlinedIcon from '@mui/icons-material/ContactPhoneOutlined';
+import useAuth from '../../../hooks/useAuth';
 
 function TemporaryDrawer({ open, onClose }) {
+  const { isAuthenticated } = useAuth();
   const CustomDrawer = styled(Drawer)(() => ({
     '& .MuiPaper-root': {
       backgroundColor: 'black',
@@ -46,7 +48,7 @@ function TemporaryDrawer({ open, onClose }) {
             component={Link}
             to="/"
           >
-            <ListItemIcon sx={{ color: 'white' }}><HomeOutlinedIcon /><Typography sx={{ml: '6px'}}>Home</Typography></ListItemIcon>
+            <ListItemIcon sx={{ color: 'white' }}><HomeOutlinedIcon /><Typography sx={{ ml: '6px' }}>Home</Typography></ListItemIcon>
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -55,32 +57,37 @@ function TemporaryDrawer({ open, onClose }) {
             component={Link}
             to="/furniture"
           >
-            <ListItemIcon sx={{ color: 'white' }}><GridOnOutlinedIcon /><Typography sx={{ml: '6px'}}>Catalog</Typography></ListItemIcon>
+            <ListItemIcon sx={{ color: 'white' }}><GridOnOutlinedIcon /><Typography sx={{ ml: '6px' }}>Catalog</Typography></ListItemIcon>
           </ListItemButton>
         </ListItem>
       </List>
       <Divider sx={{ backgroundColor: 'white', borderColor: 'white' }} />
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton
-            sx={{ color: 'white' }}
-            component={Link}
-            to="/furniture/liked"
-          >
-            <ListItemIcon sx={{ color: 'white' }}><FavoriteBorderIcon /><Typography sx={{ml: '6px'}}>Liked Furniture</Typography></ListItemIcon>
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton
-            sx={{ color: 'white' }}
-            component={Link}
-            to="/furniture/create"
-          >
-            <ListItemIcon sx={{ color: 'white' }}><AddCircleOutlineOutlinedIcon /><Typography sx={{ml: '6px'}}>Add Furniture</Typography></ListItemIcon>
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <Divider sx={{ backgroundColor: 'white', borderColor: 'white' }} />
+      {isAuthenticated && (
+        <Box>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton
+                sx={{ color: 'white' }}
+                component={Link}
+                to="/furniture/liked"
+              >
+                <ListItemIcon sx={{ color: 'white' }}><FavoriteBorderIcon /><Typography sx={{ ml: '6px' }}>Liked Furniture</Typography></ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                sx={{ color: 'white' }}
+                component={Link}
+                to="/furniture/create"
+              >
+                <ListItemIcon sx={{ color: 'white' }}><AddCircleOutlineOutlinedIcon /><Typography sx={{ ml: '6px' }}>Add Furniture</Typography></ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider sx={{ backgroundColor: 'white', borderColor: 'white' }} />
+        </Box>
+      )}
+
       <List>
         <ListItem disablePadding>
           <ListItemButton
@@ -88,7 +95,7 @@ function TemporaryDrawer({ open, onClose }) {
             component={Link}
             to="/about-us"
           >
-            <ListItemIcon sx={{ color: 'white' }}><InfoOutlinedIcon /><Typography sx={{ml: '6px'}}>About Us</Typography></ListItemIcon>
+            <ListItemIcon sx={{ color: 'white' }}><InfoOutlinedIcon /><Typography sx={{ ml: '6px' }}>About Us</Typography></ListItemIcon>
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -97,7 +104,7 @@ function TemporaryDrawer({ open, onClose }) {
             component={Link}
             to="/contact"
           >
-            <ListItemIcon sx={{ color: 'white' }}><ContactPhoneOutlinedIcon /><Typography sx={{ml: '6px'}}>Contact Us</Typography></ListItemIcon>
+            <ListItemIcon sx={{ color: 'white' }}><ContactPhoneOutlinedIcon /><Typography sx={{ ml: '6px' }}>Contact Us</Typography></ListItemIcon>
           </ListItemButton>
         </ListItem>
       </List>
