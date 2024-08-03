@@ -1,21 +1,26 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { TextField, Button, Typography, Box } from '@mui/material';
-import useAuth from '../../hooks/useAuth'; // Ensure correct import path
-import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../slices/authSlice';
 
 const LoginForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { login } = useAuth(); // Call useAuth as a function
-    const [loginError, setLoginError] = useState(''); // State for login error
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [loginError, setLoginError] = useState('');
 
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:3030/users/login', data);
             const { accessToken, firstName } = response.data;
-            login(accessToken, firstName); // Now login should be defined as a function
-            console.log('Login successful:', response.data);
+            dispatch(login({ token: accessToken, firstName }));
+            navigate('/');
         } catch (error) {
             if (error.response) {
                 setLoginError(error.response.data.message || 'Login failed');
