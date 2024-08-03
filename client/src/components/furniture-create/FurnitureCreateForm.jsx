@@ -13,9 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-
-const CATEGORIES = ["Seating", "Tables", "Storage", "Beds", "Office", "Decor"];
-const MATERIALS = ["Wood", "Glass", "Leather", "Fabric"];
+import { CATEGORIES, MATERIALS } from '../../utils/utils';
 
 const CreateFurnitureForm = () => {
   const { control, handleSubmit, formState: { errors } } = useForm({
