@@ -11,20 +11,32 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState, useEffect } from 'react';
 import useAuth from '../../../hooks/useAuth';
+import { getUserData } from '../../../services/userService';
 
 const FurnitureCatalogCard = ({ item }) => {
   const [liked, setLiked] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
 
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     checkIfLiked(item._id);
-  }, [item._id]);
+    checkIfOwner(item._ownerId);
+  }, [item._id, item._ownerId]);
 
   const checkIfLiked = (itemId) => {
     const likedItems = JSON.parse(localStorage.getItem('likedItems')) || [];
     setLiked(likedItems.includes(itemId));
   };
+
+  const checkIfOwner = async (ownerId) => {
+    try {
+        const currentUser = await getUserData();
+        setIsOwner(currentUser._id === ownerId);
+    } catch (error) {
+        console.error('Error fetching user data', error);
+    }
+};
 
   const toggleLike = () => {
     const likedItems = JSON.parse(localStorage.getItem('likedItems')) || [];
@@ -82,7 +94,8 @@ const FurnitureCatalogCard = ({ item }) => {
         {isAuthenticated && (
           <IconButton
             variant="contained"
-            color={liked ? 'error' : 'default'}
+            disabled = {isOwner ? true : false}
+            color={liked ? 'error' : 'primary'}
             onClick={toggleLike}
             sx={{ marginLeft: 'auto' }}
           >
@@ -100,6 +113,7 @@ FurnitureCatalogCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
+    _ownerId: PropTypes.string.isRequired,
   }).isRequired,
 };
 

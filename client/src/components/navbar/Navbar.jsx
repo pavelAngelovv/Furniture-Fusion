@@ -12,7 +12,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
-import useAuth from '../../hooks/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../slices/authSlice';
 import styles from '../../../public/styles/navbar.module.css';
 
 export default function PrimarySearchAppBar() {
@@ -20,13 +21,13 @@ export default function PrimarySearchAppBar() {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const location = useLocation();
     const theme = useTheme();
-    const { isAuthenticated, logout } = useAuth();
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const firstName = useSelector(state => state.auth.firstName);
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const isLoginPage = location.pathname === '/login';
     const isRegisterPage = location.pathname === '/register';
-
-    const firstName = localStorage.getItem('firstName') || '';
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -44,6 +45,11 @@ export default function PrimarySearchAppBar() {
 
     const handleDrawerClose = () => {
         setDrawerOpen(false);
+    };
+
+    const handleLogout = () => {
+        handleMenuClose();
+        dispatch(logout());
     };
 
     const menuId = 'primary-search-account-menu';
@@ -67,10 +73,7 @@ export default function PrimarySearchAppBar() {
                 <MenuItem key="profile" component={Link} to="/profile" onClick={handleMenuClose}>
                     Profile
                 </MenuItem>,
-                <MenuItem key="logout" onClick={() => {
-                    handleMenuClose();
-                    logout();
-                }}>
+                <MenuItem key="logout" onClick={handleLogout}>
                     Logout
                 </MenuItem>
             ] : [

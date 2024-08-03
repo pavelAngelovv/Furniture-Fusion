@@ -5,32 +5,27 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import AuthContext from '../../contexts/AuthContext';
+import { useDispatch } from 'react-redux';
+import { login } from '../../slices/authSlice';
 
 const RegisterForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext); // Use AuthContext
+    const dispatch = useDispatch();
 
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:3030/users/register', data);
             const { accessToken, firstName } = response.data;
-
-            login(accessToken, firstName); // Update AuthContext
+            dispatch(login({ token: accessToken, firstName }));
             navigate('/');
-            console.log('Registration successful:', response.data);
         } catch (error) {
-            if (error.response) {
-                console.error('Registration failed:', error.response.data);
-            } else if (error.request) {
-                console.error('No response received:', error.request);
-            } else {
-                console.error('Error:', error.message);
-            }
+            console.error('Registration failed:', error.response?.data || error.message);
+            alert(error.response?.data.message);
         }
     };
+
+    const password = watch('password');
 
     return (
         <Box
@@ -110,7 +105,7 @@ const RegisterForm = () => {
                 type="password"
                 {...register('confirmPassword', {
                     required: 'Please confirm your password',
-                    validate: (value, { password }) => value === password || 'Passwords do not match',
+                    validate: value => value === password || 'Passwords do not match',
                 })}
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}

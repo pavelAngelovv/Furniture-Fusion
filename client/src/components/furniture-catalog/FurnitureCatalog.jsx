@@ -1,24 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Container } from '@mui/material';
 import FurnitureCatalogCard from './furniture-catalog-card/FurnitureCatalogCard';
-import { getFurnitureItems } from '../../services/furnitureService';
+import { fetchFurnitureItems } from '../../slices/furnitureSlice';
 
 const FurnitureCatalog = () => {
-  const [furnitureItems, setFurnitureItems] = useState([]);
+  const dispatch = useDispatch();
+  const { items: furnitureItems, status } = useSelector((state) => state.furniture);
 
   useEffect(() => {
-    fetchFurnitureItems();
-  }, []);
-
-  const fetchFurnitureItems = async () => {
-    try {
-      const items = await getFurnitureItems();
-      console.log(items);
-      setFurnitureItems(items);
-    } catch (error) {
-      console.error('Error fetching furniture items', error);
+    if (status === 'idle') {
+      dispatch(fetchFurnitureItems());
     }
-  };
+  }, [dispatch, status]);
+
+  if (status === 'loading') return <p>Loading...</p>;
+  if (status === 'failed') return <p>Error loading furniture items.</p>;
 
   return (
     <Container sx={{marginTop: {xs: '20%', sm: '17%', md: '8%'}, mb: '3rem'}}>

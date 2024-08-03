@@ -1,5 +1,6 @@
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
 import Layout from './components/layout/Layout';
 import FurnitureCatalog from './components/furniture-catalog/FurnitureCatalog';
 import FurnitureDetails from './components/furniture-details/FurnitureDetails';
@@ -16,29 +17,31 @@ import FurnitureEdit from './components/furniture-edit/FurnitureEdit';
 const App = () => {
   return (
     <Router>
-      <AuthProvider>
-        <Layout>
-          <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/furniture" element={<FurnitureCatalog />} />
-            <Route path="/furniture/:id" element={<FurnitureDetails />} />
-            <Route path="/furniture/liked" element={<FurnitureLiked />} />
-            <Route path="/furniture/create" element={<FurnitureCreate />} />
-            <Route path="/furniture/edit/:id" element={<FurnitureEdit />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
-        </Layout>
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <Layout>
+            <Routes>
+              <Route path="/" exact element={<Home />} />
+              <Route path="/furniture" element={<FurnitureCatalog />} />
+              <Route path="/furniture/:id" element={<FurnitureDetails />} />
+              <Route path="/furniture/liked" element={<FurnitureLiked />} />
+              <Route path="/furniture/create" element={<FurnitureCreate />} />
+              <Route path="/furniture/edit/:id" element={<FurnitureEdit />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </Layout>
+        </AuthProvider>
+      </Provider>
     </Router>
   );
 };
