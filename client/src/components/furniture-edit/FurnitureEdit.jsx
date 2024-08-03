@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
-import FurnitureCreateForm from './FurnitureCreateForm';
+import FurnitureEditForm from './FurnitureEditForm';
 
-const FurnitureCreate = () => {
+const FurnitureEdit = () => {
     return (
         <Box
             sx={{
@@ -13,9 +13,9 @@ const FurnitureCreate = () => {
                 mt: '3.5rem'
             }}
         >
-            <FurnitureCreateForm />
+            <FurnitureEditForm />
         </Box>
     );
 };
 
-export default FurnitureCreate;
+export default FurnitureEdit;

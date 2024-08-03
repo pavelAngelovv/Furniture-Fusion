@@ -1,4 +1,3 @@
-// src/services/furnitureService.js
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3030/data/furniture';
@@ -25,8 +24,14 @@ export const createFurnitureItem = async (data) => {
   return response.data;
 };
 
-export const updateFurnitureItem = async (id, item) => {
-  const response = await axios.put(`${API_URL}/${id}`, item);
+export const updateFurnitureItem = async (id, data) => {
+  const token = localStorage.getItem('accessToken');
+  const headers = {
+    'X-Authorization': token,
+    'Content-Type': 'application/json'
+  };
+
+  const response = await axios.put(`${API_URL}/${id}`, data, { headers });
   return response.data;
 };
 
