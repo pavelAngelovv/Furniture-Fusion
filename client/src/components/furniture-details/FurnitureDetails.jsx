@@ -15,7 +15,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { getFurnitureItemById } from '../../services/furnitureService';
+import AlertDialog from './dialog/AlertDialog';
+import { getFurnitureItemById, deleteFurnitureItem } from '../../services/furnitureService';
 import { getUserData } from '../../services/userService';
 import useAuth from '../../hooks/useAuth';
 
@@ -25,6 +26,7 @@ const FurnitureDetails = () => {
     const [liked, setLiked] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [isOwner, setIsOwner] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
@@ -84,9 +86,20 @@ const FurnitureDetails = () => {
         navigate(`/furniture/edit/${furnitureId}`);
     };
 
-    const handleDelete = () => {
-        // Add delete logic here
-        console.log('Delete furniture item');
+    const handleDelete = async () => {
+        try {
+            await deleteFurnitureItem(furnitureId);
+            console.log('Furniture item deleted successfully');
+            navigate('/furniture');
+        } catch (error) {
+            console.error('Error deleting furniture item', error);
+        } finally {
+            setDialogOpen(false);
+        }
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false);
     };
 
     if (!furniture) return (
@@ -157,23 +170,23 @@ const FurnitureDetails = () => {
                                 </IconButton>
                             )}
                             {isOwner && (
-                            <>
-                                <IconButton
-                                    aria-label="settings"
-                                    onClick={handleMenuClick}
-                                >
-                                    <SettingsOutlinedIcon />
-                                </IconButton>
-                                <Menu
-                                    anchorEl={anchorEl}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleMenuClose}
-                                >
-                                    <MenuItem onClick={handleEdit}>Edit</MenuItem>
-                                    <MenuItem onClick={handleDelete}>Delete</MenuItem>
-                                </Menu>
-                            </>
-                        )}
+                                <>
+                                    <IconButton
+                                        aria-label="settings"
+                                        onClick={handleMenuClick}
+                                    >
+                                        <SettingsOutlinedIcon />
+                                    </IconButton>
+                                    <Menu
+                                        anchorEl={anchorEl}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleMenuClose}
+                                    >
+                                        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+                                        <MenuItem onClick={() => setDialogOpen(true)}>Delete</MenuItem>
+                                    </Menu>
+                                </>
+                            )}
                         </Box>
 
                         <Typography
@@ -241,6 +254,13 @@ const FurnitureDetails = () => {
                     </CardContent>
                 </Box>
             </Card>
+            <AlertDialog
+                open={dialogOpen}
+                onClose={handleDialogClose}
+                onConfirm={handleDelete}
+                title="Confirm Delete"
+                message="Are you sure you want to delete this item?"
+            />
         </Container>
     );
 };

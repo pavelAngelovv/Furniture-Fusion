@@ -36,6 +36,12 @@ export const updateFurnitureItem = async (id, data) => {
 };
 
 export const deleteFurnitureItem = async (id) => {
-  const response = await axios.delete(`${API_URL}/${id}`);
+  const token = localStorage.getItem('accessToken');
+  const headers = {
+    'X-Authorization': token,
+    'Content-Type': 'application/json'
+  };
+  
+  const response = await axios.delete(`${API_URL}/${id}`, { headers });
   return response.data;
 };
