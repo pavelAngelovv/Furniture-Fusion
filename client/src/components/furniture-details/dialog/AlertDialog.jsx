@@ -24,7 +24,7 @@ function AlertDialog({ open, onClose, onConfirm, title, message }) {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={onConfirm} autoFocus>
+        <Button color='error' onClick={onConfirm} autoFocus>
           Confirm
         </Button>
       </DialogActions>
