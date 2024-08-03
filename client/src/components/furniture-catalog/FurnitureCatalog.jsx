@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Container, Pagination } from '@mui/material';
@@ -23,15 +23,16 @@ const FurnitureCatalog = () => {
     dispatch(fetchFurnitureItems());
   }, [dispatch, location]);
 
+  const totalPages = useMemo(() => Math.ceil(furnitureItems.length / itemsPerPage), [furnitureItems.length, itemsPerPage]);
+
+  const currentItems = useMemo(() => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    return furnitureItems.slice(indexOfFirstItem, indexOfLastItem);
+  }, [currentPage, itemsPerPage, furnitureItems]);
+
   if (status === 'loading') return <p>Loading...</p>;
   if (status === 'failed') return <p>Error loading furniture items.</p>;
-
-  // Calculate total pages
-  const totalPages = Math.ceil(furnitureItems.length / itemsPerPage);
-  // Get current items
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = furnitureItems.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
