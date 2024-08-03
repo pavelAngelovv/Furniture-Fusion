@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Container } from '@mui/material';
 import FurnitureCatalogCard from './furniture-catalog-card/FurnitureCatalogCard';
@@ -6,6 +7,7 @@ import { fetchFurnitureItems } from '../../slices/furnitureSlice';
 
 const FurnitureCatalog = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { items: furnitureItems, status } = useSelector((state) => state.furniture);
 
   useEffect(() => {
@@ -13,6 +15,10 @@ const FurnitureCatalog = () => {
       dispatch(fetchFurnitureItems());
     }
   }, [dispatch, status]);
+
+  useEffect(() => {
+    dispatch(fetchFurnitureItems());
+  }, [dispatch, location]);
 
   if (status === 'loading') return <p>Loading...</p>;
   if (status === 'failed') return <p>Error loading furniture items.</p>;

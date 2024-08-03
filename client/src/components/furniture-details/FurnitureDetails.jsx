@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -18,7 +19,6 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AlertDialog from './dialog/AlertDialog';
 import { getFurnitureItemById, deleteFurnitureItem } from '../../services/furnitureService';
 import { getUserData } from '../../services/userService';
-import useAuth from '../../hooks/useAuth';
 
 const FurnitureDetails = () => {
     const { id: furnitureId } = useParams();
@@ -28,7 +28,7 @@ const FurnitureDetails = () => {
     const [isOwner, setIsOwner] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
 
-    const { isAuthenticated } = useAuth();
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const navigate = useNavigate();
 
     useEffect(() => {

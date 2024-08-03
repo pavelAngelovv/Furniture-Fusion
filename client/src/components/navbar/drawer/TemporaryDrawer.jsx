@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
@@ -15,10 +16,9 @@ import GridOnOutlinedIcon from '@mui/icons-material/GridOnOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ContactPhoneOutlinedIcon from '@mui/icons-material/ContactPhoneOutlined';
-import useAuth from '../../../hooks/useAuth';
 
 function TemporaryDrawer({ open, onClose }) {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const CustomDrawer = styled(Drawer)(() => ({
     '& .MuiPaper-root': {
       backgroundColor: 'black',

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import { getFurnitureItemById, updateFurnitureItem } from '../../services/furnitureService';
-import { getUserData } from '../../services/userService';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFurnitureById, updateFurniture } from '../../slices/furnitureSlice';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -17,74 +17,70 @@ const CATEGORIES = ["Seating", "Tables", "Storage", "Beds", "Office", "Decor"];
 const MATERIALS = ["Wood", "Glass", "Leather", "Fabric"];
 
 const FurnitureEditForm = () => {
-    const { id } = useParams();
-    const { control, handleSubmit, setValue, formState: { errors } } = useForm({
-        defaultValues: {
-            title: '',
-            description: '',
-            material: '',
-            category: '',
-            image: '',
-            price: '',
-            weight: '',
-            dimensions: {
-                length: '',
-                width: '',
-                height: ''
-            }
+  const { id } = useParams();
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      material: '',
+      category: '',
+      image: '',
+      price: '',
+      weight: '',
+      dimensions: {
+        length: '',
+        width: '',
+        height: ''
+      }
+    }
+  });
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { item } = useSelector((state) => state.furniture);
+
+  useEffect(() => {
+    dispatch(fetchFurnitureById(id));
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (item) {
+      setValue('title', item.title);
+      setValue('description', item.description);
+      setValue('material', item.material);
+      setValue('category', item.category);
+      setValue('image', item.image);
+      setValue('price', item.price);
+      setValue('weight', item.weight);
+      setValue('dimensions.length', item.dimensions.length);
+      setValue('dimensions.width', item.dimensions.width);
+      setValue('dimensions.height', item.dimensions.height);
+    }
+  }, [item, setValue]);
+
+  const onSubmit = async (data) => {
+    try {
+      const user = { firstName: 'John', lastName: 'Doe', phoneNumber: '1234567890', email: 'john.doe@example.com' };
+      const formattedData = {
+        ...data,
+        dimensions: {
+          length: parseFloat(data.dimensions.length),
+          width: parseFloat(data.dimensions.width),
+          height: parseFloat(data.dimensions.height)
+        },
+        ownerData: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phoneNumber: user.phoneNumber,
+          email: user.email
         }
-    });
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getFurnitureItemById(id);
-                setValue('title', data.title);
-                setValue('description', data.description);
-                setValue('material', data.material);
-                setValue('category', data.category);
-                setValue('image', data.image);
-                setValue('price', data.price);
-                setValue('weight', data.weight);
-                setValue('dimensions.length', data.dimensions.length);
-                setValue('dimensions.width', data.dimensions.width);
-                setValue('dimensions.height', data.dimensions.height);
-            } catch (error) {
-                console.error('Error fetching furniture item for editing:', error);
-            }
-        };
-
-        fetchData();
-    }, [id, setValue]);
-
-    const onSubmit = async (data) => {
-        try {
-            const user = await getUserData();
-
-            const formattedData = {
-                ...data,
-                dimensions: {
-                    length: parseFloat(data.dimensions.length),
-                    width: parseFloat(data.dimensions.width),
-                    height: parseFloat(data.dimensions.height)
-                },
-                ownerData: {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    phoneNumber: user.phoneNumber,
-                    email: user.email
-                }
-            };
-
-            await updateFurnitureItem(id, formattedData);
-            console.log('Furniture item updated successfully');
-            navigate(`/furniture/${id}`);
-        } catch (error) {
-            console.error('Update failed:', error.message);
-        }
-    };
+      };
+      await dispatch(updateFurniture({ id, data: formattedData }));
+      navigate(`/furniture/${id}`);
+    } catch (error) {
+      console.error('Update failed:', error.message);
+    }
+  };
 
     const getNestedError = (name) => {
         const parts = name.split('.');
