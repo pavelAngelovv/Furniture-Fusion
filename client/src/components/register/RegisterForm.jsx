@@ -133,6 +133,7 @@ const RegisterForm = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    sx={{mr: '30px'}}
                 >
                     Register
                 </Button>

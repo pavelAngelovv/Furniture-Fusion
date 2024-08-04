@@ -94,6 +94,7 @@ const LoginForm = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    sx={{mr: '30px'}}
                 >
                     Login
                 </Button>

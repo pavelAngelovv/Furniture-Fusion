@@ -268,19 +268,19 @@ const CreateFurnitureForm = () => {
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
         <Button
+          variant="contained"
+          color="error"
+          onClick={() => navigate('/furniture')}
+        >
+          Cancel
+        </Button>
+        <Button
           type="submit"
           variant="contained"
           color="primary"
           disabled={loading}
         >
           {loading ? 'Creating...' : 'Create'}
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => navigate('/furniture')}
-        >
-          Cancel
         </Button>
       </Box>
 

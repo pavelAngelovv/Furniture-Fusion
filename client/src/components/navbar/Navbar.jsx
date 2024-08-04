@@ -110,7 +110,11 @@ export default function PrimarySearchAppBar() {
                         <IconButton
                             component="a"
                             href="/"
-                            sx={{ display: 'flex', alignItems: 'center' }}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                mr: isLoginPage || isRegisterPage ? "3rem" : 0
+                              }}
                         >
                             <img src='../../../public/images/Furniture-Fusion-Text-White.png' alt="Logo" className={styles['logo-img']} />
                         </IconButton>
