@@ -1,0 +1,54 @@
+.awssld__content {
+    background-color: rgba(255, 255, 255, 0);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.awssld__wrapper {
+    overflow: auto;
+}
+
+.awssld__controls button {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: -10;
+    height: 15%;
+    position: absolute;
+    top: 20%;
+    border: none;
+    background-color:#ffffff00;
+    color: #fff;
+    cursor: pointer;
+}
+.awssld__wrapper {
+  overflow: visible !important;
+}
+
+.slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  @media (max-width: 900px) {
+    .awssld__controls button {
+      top: 60%;
+    }
+  }
+  
+

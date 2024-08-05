@@ -60,7 +60,7 @@ const FurnitureCatalogCard = ({ item }) => {
         image={item.image}
         alt={item.title}
       />
-      <CardContent>
+      <CardContent sx={{pb: '0px'}}>
         <Typography
           gutterBottom
           variant="h5"
@@ -75,16 +75,15 @@ const FurnitureCatalogCard = ({ item }) => {
           {item.title}
         </Typography>
         <Typography
-          variant="body2"
-          color="text.secondary"
+          variant="h6"
           sx={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            maxWidth: '100%'  // Ensures it applies to the full width of the parent container
+            maxWidth: '100%',  // Ensures it applies to the full width of the parent container
           }}
         >
-          {item.description}
+          {item.price}$
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between' }}>
@@ -112,6 +111,7 @@ FurnitureCatalogCard.propTypes = {
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
     _ownerId: PropTypes.string.isRequired,
   }).isRequired,

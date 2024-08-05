@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { getFurnitureItemById, updateFurnitureItem, createFurnitureItem } from '../services/furnitureService';
+import { getFurnitureItemById, updateFurnitureItem, createFurnitureItem, getFurnitureItems, getRecentItems } from '../services/furnitureService';
 
 export const fetchFurnitureItems = createAsyncThunk(
   'furniture/fetchFurnitureItems',
   async () => {
-    const response = await axios.get('http://localhost:3030/data/furniture');
-    return response.data;
+    const response = await getFurnitureItems();
+    return response;
   }
 );
 
@@ -14,6 +13,14 @@ export const fetchFurnitureById = createAsyncThunk(
   'furniture/fetchById',
   async (id) => {
     const response = await getFurnitureItemById(id);
+    return response;
+  }
+);
+
+export const fetchRecentFurniture = createAsyncThunk(
+  'furniture/fetchRecent',
+  async () => {
+    const response = await getRecentItems();
     return response;
   }
 );
@@ -41,6 +48,7 @@ export const createFurniture = createAsyncThunk(
 const initialState = {
   items: [],
   item: null,
+  recentItems: [],
   loading: false,
   error: null,
 };
@@ -73,10 +81,25 @@ const furnitureSlice = createSlice({
         state.error = action.error.message;
         state.loading = false;
       })
+      .addCase(fetchRecentFurniture.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchRecentFurniture.fulfilled, (state, action) => {
+        state.recentItems = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchRecentFurniture.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loading = false;
+      })
       .addCase(updateFurniture.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateFurniture.fulfilled, (state) => {
+      .addCase(updateFurniture.fulfilled, (state, action) => {
+        const index = state.items.findIndex(item => item._id === action.payload.id);
+        if (index !== -1) {
+          state.items[index] = { ...state.items[index], ...action.payload.data };
+        }
         state.loading = false;
       })
       .addCase(updateFurniture.rejected, (state, action) => {
@@ -88,7 +111,7 @@ const furnitureSlice = createSlice({
         state.error = null;
       })
       .addCase(createFurniture.fulfilled, (state, action) => {
-        state.item = action.payload;
+        state.items.push(action.payload);
         state.loading = false;
       })
       .addCase(createFurniture.rejected, (state, action) => {

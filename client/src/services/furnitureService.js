@@ -12,6 +12,15 @@ export const getFurnitureItemById = async (id) => {
   return response.data;
 };
 
+export const getRecentItems = async () => {
+  try {
+      const response = await axios.get(`${API_URL}?sortBy=_createdOn%20desc`); // Adjust the endpoint as necessary
+      return response.data;
+  } catch (error) {
+      console.error('Failed to fetch recent posts:', error);
+      throw error;
+  }
+};
 
 export const createFurnitureItem = async (data) => {
   const token = localStorage.getItem('accessToken');
