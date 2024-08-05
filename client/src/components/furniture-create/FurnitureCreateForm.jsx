@@ -59,7 +59,8 @@ const CreateFurnitureForm = () => {
           firstName: user.firstName,
           lastName: user.lastName,
           phoneNumber: user.phoneNumber,
-          email: user.email
+          email: user.email,
+          location: user.location
         }
       };
 
@@ -156,7 +157,7 @@ const CreateFurnitureForm = () => {
         'text',
         {
           required: 'Title is required',
-          maxLength: { value: 30, message: 'Title cannot exceed 30 characters' }
+          maxLength: { value: 40, message: 'Title cannot exceed 40 characters' }
         }
       )}
       {renderTextField(

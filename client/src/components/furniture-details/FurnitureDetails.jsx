@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -27,6 +28,7 @@ const FurnitureDetails = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [isOwner, setIsOwner] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [location, setLocation] = useState(null);
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const navigate = useNavigate();
@@ -38,8 +40,16 @@ const FurnitureDetails = () => {
                 setFurniture(data);
                 checkIfLiked(data._id);
                 checkIfOwner(data._ownerId);
+
+                // Fetch location coordinates
+                const response = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(data.ownerData.location)}&apiKey=356aca8cace74bb6808de9646c2d3861`);
+                const locationData = await response.json();
+                if (locationData.features.length > 0) {
+                    const { lat, lon } = locationData.features[0].properties;
+                    setLocation({ lat, lon });
+                }
             } catch (error) {
-                console.error('Error fetching furniture item', error);
+                console.error('Error fetching data', error);
             }
         };
 
@@ -96,6 +106,20 @@ const FurnitureDetails = () => {
         } finally {
             setDialogOpen(false);
         }
+    };
+
+    const Map = ({ location }) => {
+        if (!location) return null;
+
+        return (
+            <Box sx={{ mt: '2rem', height: '300px', width: '100%', position: 'relative' }}>
+                <iframe
+                    src={`https://maps.geoapify.com/v1/staticmap?style=osm-bright&width=600&height=400&center=lonlat:${location.lon},${location.lat}&zoom=12.7015&marker=lonlat:${location.lon},${location.lat};type:material;color:red;icon:cloud;iconsize:large&apiKey=356aca8cace74bb6808de9646c2d3861`}
+                    style={{ width: '100%', height: '100%', border: 'none' }}
+                    title="Location Map"
+                ></iframe>
+            </Box>
+        );
     };
 
     const handleDialogClose = () => {
@@ -247,9 +271,14 @@ const FurnitureDetails = () => {
                             <Typography variant="body2" color="text.secondary" sx={{ mb: '10px' }}>
                                 {furniture.ownerData.phoneNumber}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: '10px' }}>
                                 {furniture.ownerData.email}
                             </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {furniture.ownerData.location}
+                            </Typography>
+                            {/* Add the Map Component */}
+                            {location && <Map location={location} />}
                         </Box>
                     </CardContent>
                 </Box>
@@ -263,6 +292,13 @@ const FurnitureDetails = () => {
             />
         </Container>
     );
+};
+
+Map.propTypes = {
+    location: PropTypes.shape({
+        lat: PropTypes.number.isRequired,
+        lon: PropTypes.number.isRequired
+    })
 };
 
 export default FurnitureDetails;
