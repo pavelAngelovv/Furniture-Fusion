@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFurnitureItemById, updateFurnitureItem, createFurnitureItem, getFurnitureItems, getRecentItems } from '../services/furnitureService';
 
+// Async thunks
 export const fetchFurnitureItems = createAsyncThunk(
   'furniture/fetchFurnitureItems',
   async () => {
@@ -27,9 +28,13 @@ export const fetchRecentFurniture = createAsyncThunk(
 
 export const updateFurniture = createAsyncThunk(
   'furniture/update',
-  async ({ id, data }) => {
-    await updateFurnitureItem(id, data);
-    return { id, data };
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      await updateFurnitureItem(id, data);
+      return { id, data }; // Return updated data for state update
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
   }
 );
 
@@ -44,7 +49,6 @@ export const createFurniture = createAsyncThunk(
     }
   }
 );
-
 
 const initialState = {
   items: [],
@@ -104,7 +108,7 @@ const furnitureSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateFurniture.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
         state.loading = false;
       })
       .addCase(createFurniture.pending, (state) => {
@@ -116,7 +120,7 @@ const furnitureSlice = createSlice({
         state.loading = false;
       })
       .addCase(createFurniture.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = action.payload || action.error.message;
         state.loading = false;
       });
   },
