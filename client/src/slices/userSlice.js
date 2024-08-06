@@ -1,15 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getUserData } from '../services/userService';
 
-export const fetchUserData = createAsyncThunk('user/fetchUserData', async () => {
-  const response = await getUserData();
-  return response;
-});
+export const fetchUserData = createAsyncThunk(
+  'user/fetchUserData',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getUserData();
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    data: null,
+    user: null,
     loading: false,
     error: null
   },
