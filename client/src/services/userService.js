@@ -1,7 +1,7 @@
 // src/services/userService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3030/users/me'
+const API_URL = 'http://localhost:3030/users'
 
 export const getUserData = async () => {
     const token = localStorage.getItem('accessToken');
@@ -10,7 +10,7 @@ export const getUserData = async () => {
     }
 
     try {
-        const response = await axios.get(`${API_URL}`, {
+        const response = await axios.get(`${API_URL}/me`, {
             headers: {
                 'X-Authorization': token
             }

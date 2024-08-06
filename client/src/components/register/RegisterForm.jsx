@@ -1,18 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Autocomplete from '@mui/material/Autocomplete';
-import { login } from '../../slices/authSlice';
+import { register } from '../../slices/authSlice'; // Import the register thunk
 import useLocationAutocomplete from '../../hooks/useLocationAutocomplete';
 
 const RegisterForm = () => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const { register: formRegister, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const apiKey = '356aca8cace74bb6808de9646c2d3861';
@@ -21,13 +20,17 @@ const RegisterForm = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('http://localhost:3030/users/register', data);
-            const { accessToken, firstName } = response.data;
-            dispatch(login({ token: accessToken, firstName }));
-            navigate('/');
+            const resultAction = await dispatch(register(data));
+
+            if (register.fulfilled.match(resultAction)) {
+                navigate('/');
+            } else {
+                console.error('Registration failed:', resultAction.payload);
+                alert(resultAction.payload);
+            }
         } catch (error) {
-            console.error('Registration failed:', error.response?.data || error.message);
-            alert(error.response?.data.message);
+            console.error('Registration failed:', error.message);
+            alert(error.message);
         }
     };
 
@@ -60,7 +63,7 @@ const RegisterForm = () => {
                         margin="normal"
                         id="firstName"
                         label="First Name"
-                        {...register('firstName', { required: 'First name is required' })}
+                        {...formRegister('firstName', { required: 'First name is required' })}
                         error={!!errors.firstName}
                         helperText={errors.firstName?.message}
                     />
@@ -71,7 +74,7 @@ const RegisterForm = () => {
                         margin="normal"
                         id="lastName"
                         label="Last Name"
-                        {...register('lastName', { required: 'Last name is required' })}
+                        {...formRegister('lastName', { required: 'Last name is required' })}
                         error={!!errors.lastName}
                         helperText={errors.lastName?.message}
                     />
@@ -83,7 +86,7 @@ const RegisterForm = () => {
                         id="email"
                         label="Email"
                         type="email"
-                        {...register('email', {
+                        {...formRegister('email', {
                             required: 'Email is required',
                             pattern: {
                                 value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
@@ -101,7 +104,7 @@ const RegisterForm = () => {
                         id="phoneNumber"
                         label="Phone Number"
                         type="tel"
-                        {...register('phoneNumber', {
+                        {...formRegister('phoneNumber', {
                             required: 'Phone number is required',
                             pattern: {
                                 value: /^[0-9]{10}$/,
@@ -124,7 +127,7 @@ const RegisterForm = () => {
                                 margin="normal"
                                 id="location"
                                 label="Location"
-                                {...register('location', { required: 'Location is required' })}
+                                {...formRegister('location', { required: 'Location is required' })}
                                 error={!!errors.location}
                                 helperText={errors.location?.message}
                             />
@@ -138,7 +141,7 @@ const RegisterForm = () => {
                         id="password"
                         label="Password"
                         type="password"
-                        {...register('password', {
+                        {...formRegister('password', {
                             required: 'Password is required',
                             minLength: {
                                 value: 6,
@@ -156,7 +159,7 @@ const RegisterForm = () => {
                         id="confirmPassword"
                         label="Confirm Password"
                         type="password"
-                        {...register('confirmPassword', {
+                        {...formRegister('confirmPassword', {
                             required: 'Please confirm your password',
                             validate: value => value === password || 'Passwords do not match',
                         })}
