@@ -21,7 +21,7 @@ const LoginForm = () => {
         try {
             // Dispatch the login thunk
             const resultAction = await dispatch(login(data));
-            
+
             if (login.fulfilled.match(resultAction)) {
                 // Login successful, navigate to home
                 navigate('/');
@@ -52,21 +52,18 @@ const LoginForm = () => {
                 Login
             </Typography>
 
-            {/* Display error message from Redux store */}
             {error && (
                 <Typography color="error" gutterBottom>
                     {error}
                 </Typography>
             )}
-            
-            {/* Display local login error */}
+
             {loginError && (
                 <Typography color="error" gutterBottom>
                     {loginError}
                 </Typography>
             )}
 
-            {/* Email */}
             <TextField
                 fullWidth
                 margin="normal"
@@ -84,7 +81,6 @@ const LoginForm = () => {
                 helperText={errors.email?.message}
             />
 
-            {/* Password */}
             <TextField
                 fullWidth
                 margin="normal"
