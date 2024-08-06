@@ -1,11 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { registerUser } from '../services/userService';
+import { loginUser, registerUser } from '../services/userService';
 
+// Async thunk for registration
 export const register = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
       const response = await registerUser(userData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await loginUser(userData);
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -23,46 +36,50 @@ const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    // Reducer to handle synchronous login
-    login(state, action) {
-      state.isAuthenticated = true;
-      state.token = action.payload.token;
-      state.firstName = action.payload.firstName;
-      localStorage.setItem('accessToken', action.payload.token); // Setting token in localStorage
-      localStorage.setItem('firstName', action.payload.firstName); // Setting firstName in localStorage
-    },
-    // Reducer to handle synchronous logout
     logout(state) {
       state.isAuthenticated = false;
       state.token = null;
       state.firstName = '';
-      localStorage.removeItem('accessToken'); // Removing token from localStorage
-      localStorage.removeItem('firstName'); // Removing firstName from localStorage
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('firstName');
     },
   },
   extraReducers: (builder) => {
     builder
-      // Handle the pending state of the register thunk
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      // Handle the fulfilled state of the register thunk
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.token = action.payload; // Setting token from response
-        state.firstName = action.payload.firstName; // Setting firstName from response
-        localStorage.setItem('accessToken', action.payload.accessToken); // Persisting token in localStorage
-        localStorage.setItem('firstName', action.payload.firstName); // Persisting firstName in localStorage
+        state.token = action.payload.accessToken;
+        state.firstName = action.payload.firstName;
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('firstName', action.payload.firstName);
       })
-      // Handle the rejected state of the register thunk
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Error message from the rejected action
+        state.error = action.payload;
+      })
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.token = action.payload.accessToken;
+        state.firstName = action.payload.firstName;
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('firstName', action.payload.firstName);
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

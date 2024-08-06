@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../slices/authSlice';
 
 const LoginForm = () => {
@@ -15,23 +14,25 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const [loginError, setLoginError] = useState('');
 
+    // Access login error from Redux store if needed
+    const error = useSelector((state) => state.auth.error);
+
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('http://localhost:3030/users/login', data);
-            const { accessToken, firstName } = response.data;
-            dispatch(login({ token: accessToken, firstName }));
-            navigate('/');
-        } catch (error) {
-            if (error.response) {
-                setLoginError(error.response.data.message || 'Login failed');
-                console.error('Login failed:', error.response.data);
-            } else if (error.request) {
-                setLoginError('No response received from the server');
-                console.error('No response received:', error.request);
+            // Dispatch the login thunk
+            const resultAction = await dispatch(login(data));
+            
+            if (login.fulfilled.match(resultAction)) {
+                // Login successful, navigate to home
+                navigate('/');
             } else {
-                setLoginError(error.message);
-                console.error('Error:', error.message);
+                // Handle login error
+                setLoginError(resultAction.payload || 'Login failed');
+                console.error('Login failed:', resultAction.payload);
             }
+        } catch (error) {
+            setLoginError(error.message || 'An unexpected error occurred');
+            console.error('Login error:', error.message);
         }
     };
 
@@ -51,6 +52,14 @@ const LoginForm = () => {
                 Login
             </Typography>
 
+            {/* Display error message from Redux store */}
+            {error && (
+                <Typography color="error" gutterBottom>
+                    {error}
+                </Typography>
+            )}
+            
+            {/* Display local login error */}
             {loginError && (
                 <Typography color="error" gutterBottom>
                     {loginError}
@@ -94,7 +103,7 @@ const LoginForm = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    sx={{mr: '30px'}}
+                    sx={{ mr: '30px' }}
                 >
                     Login
                 </Button>
