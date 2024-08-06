@@ -1344,7 +1344,7 @@
             "bdabf5e9-23be-40a1-9a14-9117b6702a9d": {
                 "title": "Wooden Chair",
                 "price": 150,
-                "description": "A sturdy wooden chair",
+                "description": "A sturdy wooden chair that swings back and forth. The seat is very comfortable, This chair is the best!!!",
                 "category": "Seating",
                 "material": "Wood",
                 "dimensions": {
@@ -1367,9 +1367,9 @@
             "00445b80-12c3-4f5b-81b8-8d957ef3257f": {
                 "title": "Modern Table",
                 "price": 250,
-                "description": "A sleek modern table",
+                "description": "A sleek modern table. This table has a very sleek design. Only for conoseurs!!!",
                 "category": "Tables",
-                "material": "Glass",
+                "material": "Wood",
                 "dimensions": {
                     "length": 120,
                     "width": 60,
@@ -1390,7 +1390,7 @@
             "a4466247-a409-4a5f-9b47-56a01d294966": {
                 "title": "Leather Sofa",
                 "price": 1200,
-                "description": "A comfortable leather sofa",
+                "description": "A comfortable leather sofa. The pillows on this couch are extremely comfortable, I can sit there all day!",
                 "category": "Seating",
                 "material": "Leather",
                 "dimensions": {

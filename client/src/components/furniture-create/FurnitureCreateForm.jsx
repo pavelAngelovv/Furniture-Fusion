@@ -64,7 +64,11 @@ const CreateFurnitureForm = () => {
         }
       };
 
-      dispatch(createFurniture(formattedData));
+      // Create furniture item and get the result
+      const resultAction = await dispatch(createFurniture(formattedData)).unwrap();
+
+      // Navigate to the newly created furniture item page
+      navigate(`/furniture/${resultAction._id}`);
     } catch (error) {
       console.error('Creation failed:', error.message);
     }
@@ -157,7 +161,7 @@ const CreateFurnitureForm = () => {
         'text',
         {
           required: 'Title is required',
-          maxLength: { value: 40, message: 'Title cannot exceed 40 characters' }
+          maxLength: { value: 50, message: 'Title cannot exceed 50 characters' }
         }
       )}
       {renderTextField(

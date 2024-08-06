@@ -40,10 +40,11 @@ export const createFurniture = createAsyncThunk(
       const response = await createFurnitureItem(data);
       return response;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
+
 
 const initialState = {
   items: [],

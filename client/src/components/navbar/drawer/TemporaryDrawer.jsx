@@ -15,7 +15,6 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import GridOnOutlinedIcon from '@mui/icons-material/GridOnOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import ContactPhoneOutlinedIcon from '@mui/icons-material/ContactPhoneOutlined';
 
 function TemporaryDrawer({ open, onClose }) {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -96,15 +95,6 @@ function TemporaryDrawer({ open, onClose }) {
             to="/about-us"
           >
             <ListItemIcon sx={{ color: 'white' }}><InfoOutlinedIcon /><Typography sx={{ ml: '6px' }}>About Us</Typography></ListItemIcon>
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton
-            sx={{ color: 'white' }}
-            component={Link}
-            to="/contact"
-          >
-            <ListItemIcon sx={{ color: 'white' }}><ContactPhoneOutlinedIcon /><Typography sx={{ ml: '6px' }}>Contact Us</Typography></ListItemIcon>
           </ListItemButton>
         </ListItem>
       </List>

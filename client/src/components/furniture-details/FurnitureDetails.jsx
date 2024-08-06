@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { PropTypes } from 'prop-types';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -20,6 +19,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AlertDialog from './dialog/AlertDialog';
 import { getFurnitureItemById, deleteFurnitureItem } from '../../services/furnitureService';
 import { getUserData } from '../../services/userService';
+import Map from '../map/Map';
 
 const FurnitureDetails = () => {
     const { id: furnitureId } = useParams();
@@ -106,20 +106,6 @@ const FurnitureDetails = () => {
         } finally {
             setDialogOpen(false);
         }
-    };
-
-    const Map = ({ location }) => {
-        if (!location) return null;
-
-        return (
-            <Box sx={{ mt: '2rem', height: '300px', width: '100%', position: 'relative' }}>
-                <iframe
-                    src={`https://maps.geoapify.com/v1/staticmap?style=osm-bright&width=600&height=400&center=lonlat:${location.lon},${location.lat}&zoom=12.7015&marker=lonlat:${location.lon},${location.lat};type:material;color:red;icon:cloud;iconsize:large&apiKey=356aca8cace74bb6808de9646c2d3861`}
-                    style={{ width: '100%', height: '100%', border: 'none' }}
-                    title="Location Map"
-                ></iframe>
-            </Box>
-        );
     };
 
     const handleDialogClose = () => {
@@ -277,7 +263,7 @@ const FurnitureDetails = () => {
                             <Typography variant="body2" color="text.secondary">
                                 {furniture.ownerData.location}
                             </Typography>
-                            {/* Add the Map Component */}
+                            {/* Use the Map Component */}
                             {location && <Map location={location} />}
                         </Box>
                     </CardContent>
@@ -292,13 +278,6 @@ const FurnitureDetails = () => {
             />
         </Container>
     );
-};
-
-Map.propTypes = {
-    location: PropTypes.shape({
-        lat: PropTypes.number.isRequired,
-        lon: PropTypes.number.isRequired
-    })
 };
 
 export default FurnitureDetails;

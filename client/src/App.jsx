@@ -12,6 +12,7 @@ import FurnitureLiked from './components/furniture-liked/FurnitureLiked';
 import FurnitureCreate from './components/furniture-create/FurnitureCreate';
 import AboutUs from './components/about-us/AboutUs';
 import FurnitureEdit from './components/furniture-edit/FurnitureEdit';
+import Profile from './components/profile/Profile';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* Private Routes */}
             <Route

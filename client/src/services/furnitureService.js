@@ -25,12 +25,17 @@ export const getRecentItems = async () => {
 export const createFurnitureItem = async (data) => {
   const token = localStorage.getItem('accessToken');
   const headers = {
-      'X-Authorization': token,
-      'Content-Type': 'application/json'
+    'X-Authorization': token,
+    'Content-Type': 'application/json'
   };
-  
-  const response = await axios.post(`${API_URL}`, data, { headers });
-  return response.data;
+
+  try {
+    const response = await axios.post(`${API_URL}`, data, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating furniture item:', error);
+    throw error;
+  }
 };
 
 export const updateFurnitureItem = async (id, data) => {

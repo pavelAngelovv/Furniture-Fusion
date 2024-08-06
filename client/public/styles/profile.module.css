@@ -1,0 +1,18 @@
+.profileContainer {
+    padding: 2rem;
+    padding-top: 7rem;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+  }
+  
+  .profileInfo {
+    margin-top: 1.5rem;
+  }
+  
