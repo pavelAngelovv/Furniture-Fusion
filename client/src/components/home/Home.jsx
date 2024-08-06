@@ -9,7 +9,7 @@ import 'react-awesome-slider/dist/styles.css';
 import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
 import styles from '../../../public/styles/home.module.css';
 
-// Utility function to chunk array into groups of n
+// Utility function to chunk array into groups
 const chunkArray = (array, size) => {
   const result = [];
   for (let i = 0; i < array.length; i += size) {
@@ -31,7 +31,7 @@ const Home = () => {
     dispatch(fetchRecentFurniture());
   }, [dispatch]);
 
-  // Chunk posts into groups of 3
+  // Conditionally Chunk posts into groups of 3
   const groupedPosts = chunkArray(recentPosts, isSmallScreen ? 1 : 3);
 
   const handleCardClick = (id) => {

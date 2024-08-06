@@ -14,19 +14,15 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const [loginError, setLoginError] = useState('');
 
-    // Access login error from Redux store if needed
     const error = useSelector((state) => state.auth.error);
 
     const onSubmit = async (data) => {
         try {
-            // Dispatch the login thunk
             const resultAction = await dispatch(login(data));
 
             if (login.fulfilled.match(resultAction)) {
-                // Login successful, navigate to home
                 navigate('/');
             } else {
-                // Handle login error
                 setLoginError(resultAction.payload || 'Login failed');
                 console.error('Login failed:', resultAction.payload);
             }

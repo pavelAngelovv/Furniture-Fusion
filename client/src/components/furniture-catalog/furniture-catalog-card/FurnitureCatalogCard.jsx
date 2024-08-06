@@ -69,7 +69,7 @@ const FurnitureCatalogCard = ({ item }) => {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            maxWidth: '100%'  // Ensures it applies to the full width of the parent container
+            maxWidth: '100%'
           }}
         >
           {item.title}
@@ -80,7 +80,7 @@ const FurnitureCatalogCard = ({ item }) => {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            maxWidth: '100%',  // Ensures it applies to the full width of the parent container
+            maxWidth: '100%',
           }}
         >
           {item.price}$

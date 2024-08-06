@@ -45,7 +45,6 @@ const CreateFurnitureForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Fetch user data
       const user = await getUserData();
 
       const formattedData = {
@@ -64,10 +63,8 @@ const CreateFurnitureForm = () => {
         }
       };
 
-      // Create furniture item and get the result
       const resultAction = await dispatch(createFurniture(formattedData)).unwrap();
 
-      // Navigate to the newly created furniture item page
       navigate(`/furniture/${resultAction._id}`);
     } catch (error) {
       console.error('Creation failed:', error.message);

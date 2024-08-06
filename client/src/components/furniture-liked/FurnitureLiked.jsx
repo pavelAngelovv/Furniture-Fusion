@@ -41,7 +41,7 @@ const FurnitureLiked = () => {
         <FurnitureCatalogBase
             items={likedItems}
             loading={loading}
-            error={false} // Since we're not handling specific errors here, this is set to false
+            error={false}
             title="You have no liked items yet."
             onSearchChange={handleSearchChange}
             onCategoryChange={handleCategoryChange}

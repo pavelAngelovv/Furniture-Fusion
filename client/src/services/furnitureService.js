@@ -14,7 +14,7 @@ export const getFurnitureItemById = async (id) => {
 
 export const getRecentItems = async () => {
   try {
-      const response = await axios.get(`${API_URL}?sortBy=_createdOn%20desc`); // Adjust the endpoint as necessary
+      const response = await axios.get(`${API_URL}?sortBy=_createdOn%20desc`);
       return response.data;
   } catch (error) {
       console.error('Failed to fetch recent posts:', error);

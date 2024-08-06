@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Autocomplete from '@mui/material/Autocomplete';
-import { register } from '../../slices/authSlice'; // Import the register thunk
+import { register } from '../../slices/authSlice';
 import useLocationAutocomplete from '../../hooks/useLocationAutocomplete';
 
 const RegisterForm = () => {
