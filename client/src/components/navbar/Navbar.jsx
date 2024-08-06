@@ -116,7 +116,7 @@ export default function PrimarySearchAppBar() {
                                 mr: isLoginPage || isRegisterPage ? "3rem" : 0
                               }}
                         >
-                            <img src='../../../public/images/Furniture-Fusion-Text-White.png' alt="Logo" className={styles['logo-img']} />
+                            <img src='../../public/images/Furniture-Fusion-Text-White.png' alt="Logo" className={styles['logo-img']} />
                         </IconButton>
                         {!isSmallScreen && (
                             <Box sx={{ ml: '2rem' }}>
