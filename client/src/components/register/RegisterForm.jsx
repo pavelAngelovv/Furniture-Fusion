@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,16 +8,16 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { login } from '../../slices/authSlice';
-import { useState } from 'react';
+import useLocationAutocomplete from '../../hooks/useLocationAutocomplete';
 
 const RegisterForm = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [locationOptions, setLocationOptions] = useState([]);
+    const apiKey = '356aca8cace74bb6808de9646c2d3861';
+
+    const { locationOptions, fetchLocationSuggestions } = useLocationAutocomplete(apiKey);
 
     const onSubmit = async (data) => {
         try {
@@ -29,15 +31,8 @@ const RegisterForm = () => {
         }
     };
 
-    const handleLocationChange = async (event, value) => {
-        if (value) {
-            try {
-                const response = await axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&apiKey=356aca8cace74bb6808de9646c2d3861`);
-                setLocationOptions(response.data.features.map(place => place.properties.formatted));
-            } catch (error) {
-                console.error('Error fetching location suggestions:', error);
-            }
-        }
+    const handleLocationChange = (event, value) => {
+        fetchLocationSuggestions(value);
     };
 
     const password = watch('password');
