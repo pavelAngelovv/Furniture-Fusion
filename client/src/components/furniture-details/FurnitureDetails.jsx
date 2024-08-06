@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
@@ -17,80 +16,24 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AlertDialog from './dialog/AlertDialog';
-import { getFurnitureItemById, deleteFurnitureItem } from '../../services/furnitureService';
-import { getUserData } from '../../services/userService';
+import useFetchFurnitureItemData from '../../hooks/useFetchFurnitureItemData';
+import useLike from '../../hooks/useLike';
+import useOwnership from '../../hooks/useOwnership';
+import useMenu from '../../hooks/useMenu';
+import useDialog from '../../hooks/useDialog';
 import Map from '../map/Map';
+import { deleteFurnitureItem } from '../../services/furnitureService';
 
 const FurnitureDetails = () => {
     const { id: furnitureId } = useParams();
-    const [furniture, setFurniture] = useState(null);
-    const [liked, setLiked] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [isOwner, setIsOwner] = useState(false);
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [location, setLocation] = useState(null);
-
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const navigate = useNavigate();
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getFurnitureItemById(furnitureId);
-                setFurniture(data);
-                checkIfLiked(data._id);
-                checkIfOwner(data._ownerId);
-
-                // Fetch location coordinates
-                const response = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(data.ownerData.location)}&apiKey=356aca8cace74bb6808de9646c2d3861`);
-                const locationData = await response.json();
-                if (locationData.features.length > 0) {
-                    const { lat, lon } = locationData.features[0].properties;
-                    setLocation({ lat, lon });
-                }
-            } catch (error) {
-                console.error('Error fetching data', error);
-            }
-        };
-
-        fetchData();
-    }, [furnitureId]);
-
-    const checkIfLiked = (itemId) => {
-        const likedItems = JSON.parse(localStorage.getItem('likedItems')) || [];
-        setLiked(likedItems.includes(itemId));
-    };
-
-    const checkIfOwner = async (ownerId) => {
-        try {
-            const currentUser = await getUserData();
-            setIsOwner(currentUser._id === ownerId);
-        } catch (error) {
-            console.error('Error fetching user data', error);
-        }
-    };
-
-    const toggleLike = () => {
-        const likedItems = JSON.parse(localStorage.getItem('likedItems')) || [];
-
-        if (likedItems.includes(furnitureId)) {
-            const updatedLikedItems = likedItems.filter(item => item !== furnitureId);
-            localStorage.setItem('likedItems', JSON.stringify(updatedLikedItems));
-            setLiked(false);
-        } else {
-            likedItems.push(furnitureId);
-            localStorage.setItem('likedItems', JSON.stringify(likedItems));
-            setLiked(true);
-        }
-    };
-
-    const handleMenuClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
+    const { furniture, location, error } = useFetchFurnitureItemData(furnitureId);
+    const { liked, toggleLike } = useLike(furnitureId);
+    const { isOwner } = useOwnership(furniture?._ownerId);
+    const { anchorEl, handleMenuClick, handleMenuClose } = useMenu();
+    const { dialogOpen, openDialog, closeDialog } = useDialog();
 
     const handleEdit = () => {
         navigate(`/furniture/edit/${furnitureId}`);
@@ -104,13 +47,13 @@ const FurnitureDetails = () => {
         } catch (error) {
             console.error('Error deleting furniture item', error);
         } finally {
-            setDialogOpen(false);
+            closeDialog();
         }
     };
 
-    const handleDialogClose = () => {
-        setDialogOpen(false);
-    };
+    if (error) {
+        return <Typography color="error">Error loading furniture details</Typography>;
+    }
 
     if (!furniture) return (
         <Box
@@ -174,7 +117,7 @@ const FurnitureDetails = () => {
                                 <IconButton
                                     variant="contained"
                                     color={liked ? 'error' : 'info'}
-                                    onClick={toggleLike}
+                                    onClick={() => toggleLike()}
                                 >
                                     {liked ? <FavoriteIcon fontSize='large' /> : <FavoriteBorderIcon fontSize='large' />}
                                 </IconButton>
@@ -193,7 +136,7 @@ const FurnitureDetails = () => {
                                         onClose={handleMenuClose}
                                     >
                                         <MenuItem onClick={handleEdit}>Edit</MenuItem>
-                                        <MenuItem onClick={() => setDialogOpen(true)}>Delete</MenuItem>
+                                        <MenuItem onClick={openDialog}>Delete</MenuItem>
                                     </Menu>
                                 </>
                             )}
@@ -271,7 +214,7 @@ const FurnitureDetails = () => {
             </Card>
             <AlertDialog
                 open={dialogOpen}
-                onClose={handleDialogClose}
+                onClose={closeDialog}
                 onConfirm={handleDelete}
                 title="Confirm Delete"
                 message="Are you sure you want to delete this item?"
