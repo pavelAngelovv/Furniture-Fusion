@@ -43,7 +43,6 @@ const Profile = () => {
       <Box sx={{ marginBottom: '1.5rem' }}>
         <Avatar
           alt="User Avatar"
-          src={user?.avatarUrl} // Assuming `user.avatarUrl` holds the avatar image URL
           className={styles.avatar}
         />
       </Box>
