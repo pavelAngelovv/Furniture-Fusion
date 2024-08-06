@@ -108,13 +108,15 @@ const FurnitureCatalogCard = ({ item }) => {
 
 FurnitureCatalogCard.propTypes = {
   item: PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    category: PropTypes.string,
+    material: PropTypes.string,
+    price: PropTypes.number.isRequired ,
+    image: PropTypes.string.isRequired,
     _ownerId: PropTypes.string.isRequired,
-  }).isRequired,
+  }).isRequired
 };
 
 export default FurnitureCatalogCard;

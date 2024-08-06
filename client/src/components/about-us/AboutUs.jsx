@@ -38,21 +38,26 @@ function AboutUs() {
           </Typography>
           <Typography variant="body1" sx={{ mb: 4 }}>
             We believe that furniture should be both functional and stylish. That’s why we’ve created a platform where users can browse a diverse range of furniture options, from elegant sofas and chic tables to modern chairs and antique treasures. Our platform allows:
+          </Typography>
+          <Box sx={{ mb: 4 }}>
             <ul>
               <li><strong>Buyers</strong>: Explore an extensive collection of furniture items, compare options, and find the perfect pieces to enhance your living space. With detailed descriptions, high-resolution images, and user reviews, shopping for furniture has never been easier.</li>
               <li><strong>Sellers</strong>: List your furniture effortlessly and reach a wide audience of potential buyers. Whether you’re a professional seller or simply looking to declutter your home, our user-friendly interface ensures a smooth and hassle-free selling experience.</li>
             </ul>
-          </Typography>
+          </Box>
           <Typography variant="h5" sx={{ mb: 2 }}>
             Our Values
           </Typography>
           <Typography variant="body1" sx={{ mb: 4 }}>
+            We prioritize quality, ensuring that every item on our platform meets high standards. Our team carefully reviews listings to maintain a curated selection of excellent furniture.
+          </Typography>
+          <Box sx={{ mb: 4 }}>
             <ul>
               <li><strong>Quality</strong>: We prioritize quality, ensuring that every item on our platform meets high standards. Our team carefully reviews listings to maintain a curated selection of excellent furniture.</li>
               <li><strong>Integrity</strong>: We value honesty and transparency. Our goal is to foster a community of trust, where buyers and sellers can interact with confidence and security.</li>
               <li><strong>Customer Satisfaction</strong>: Your satisfaction is our top priority. We are committed to providing exceptional customer service and support throughout your buying or selling journey.</li>
             </ul>
-          </Typography>
+          </Box>
           <Typography variant="h5" sx={{ mb: 2 }}>
             Join Our Community
           </Typography>
