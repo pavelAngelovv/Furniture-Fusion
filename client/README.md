@@ -12,6 +12,7 @@ This project is a Single Page Application (SPA) developed using React.js for man
 - **Styling:** Material-UI
 - **Authentication:** JWT-based authentication
 - **Error Handling:** Custom error handling and validation
+- **External API:** Utilizes Geoapify API for location suggestions and mapping
 
 ## Application Structure
 The application is divided into two main parts: Public and Private.
@@ -41,6 +42,7 @@ The application is divided into two main parts: Public and Private.
 - **Component Styling:** Utilizes Material-UI for consistent styling and responsive design.
 - **State Management:** Uses Redux Toolkit for managing global state and facilitating efficient state updates.
 - **User Experience:** Incorporates responsive design, loading indicators, and user-friendly error messages to enhance overall user experience.
+- **External API Integration:** Utilizes the Geoapify API for location-based features, such as location suggestions in the registration form and dynamic mapping.
 
 ## Component Overview
 - **App.jsx:** 
@@ -60,6 +62,12 @@ The application is divided into two main parts: Public and Private.
   - Form for editing existing furniture listings.
 - **Profile.jsx:** 
   - Allows users to view and edit their profile information.
+- **RegisterForm.jsx:**
+  - **Function:** Handles user registration including form validation and location suggestions.
+  - **External API:** Uses Geoapify API to fetch location suggestions for the location field in the registration form.
+- **Map.jsx:**
+  - **Function:** Displays a static map centered on a given location.
+  - **External API:** Uses Geoapify API to display a static map with a marker.
 
 ## Routing
 - **Public Routes**
@@ -87,8 +95,10 @@ The application is divided into two main parts: Public and Private.
 ## Folder Structure
 FURNITURE-FUSION/
 ├── client/
+| ├──public/images
 │ ├── src/
 │ │ ├── components/
+│ │ │ ├── about-us/
 │ │ │ ├── layout/
 │ │ │ ├── furniture-catalog/
 │ │ │ ├── furniture-details/
@@ -99,7 +109,8 @@ FURNITURE-FUSION/
 │ │ │ ├── furniture-liked/
 │ │ │ ├── furniture-create/
 │ │ │ ├── furniture-edit/
-│ │ │ └── profile/
+│ │ │ ├── profile/
+│ │ │ └── map/
 │ │ ├── hooks/
 │ │ ├── services/
 │ │ │ ├── furnitureService.js
@@ -122,7 +133,6 @@ FURNITURE-FUSION/
 ├── server/
 │ ├── server.js
 └── README.md
-
 ## Project Setup and Running
 1. **Clone the Repository**
    git clone <repository-url>
