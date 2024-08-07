@@ -6,19 +6,19 @@ import { fetchFurnitureItems } from '../slices/furnitureSlice';
 const useFetchFurnitureItems = () => {
     const dispatch = useDispatch();
     const location = useLocation();
-    const { items: furnitureItems, status } = useSelector((state) => state.furniture);
+    const { items: furnitureItems, loading } = useSelector((state) => state.furniture);
 
     useEffect(() => {
-        if (status === 'idle') {
+        if (loading === 'idle') {
             dispatch(fetchFurnitureItems());
         }
-    }, [dispatch, status]);
+    }, [dispatch, loading]);
 
     useEffect(() => {
         dispatch(fetchFurnitureItems());
     }, [dispatch, location]);
 
-    return { furnitureItems, status };
+    return { furnitureItems, loading };
 };
 
 export default useFetchFurnitureItems;

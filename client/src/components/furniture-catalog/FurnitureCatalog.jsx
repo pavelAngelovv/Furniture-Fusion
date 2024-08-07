@@ -3,11 +3,11 @@ import FurnitureCatalogBase from './FurnitureCatalogBase';
 import { useState } from 'react';
 
 const FurnitureCatalog = () => {
-    const { furnitureItems, status } = useFetchFurnitureItems();
+    const { furnitureItems, loading } = useFetchFurnitureItems();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedMaterial, setSelectedMaterial] = useState('');
-
+console.log(loading);
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
@@ -23,8 +23,8 @@ const FurnitureCatalog = () => {
     return (
         <FurnitureCatalogBase
             items={furnitureItems}
-            loading={status === 'loading'}
-            error={status === 'failed'}
+            loading={loading}
+            error={loading}
             title="You have no liked items yet."
             onSearchChange={handleSearchChange}
             onCategoryChange={handleCategoryChange}
