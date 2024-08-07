@@ -157,25 +157,25 @@ const FurnitureDetails = () => {
 
                         <Grid container spacing={2} sx={{ mb: '3rem' }}>
                             <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <img src='../../public/images/categorization.png' alt="Category" style={{ height: '30px', width: 'auto' }} />
+                                <img src='../../../public/images/categorization.png' alt="Category" style={{ height: '30px', width: 'auto' }} />
                                 <Typography variant="body2" component="div" sx={{ mt: 1, textAlign: 'center' }}>
                                     {furniture.category}
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <img src='../../public/images/fabric.png' alt="Material" style={{ height: '30px', width: 'auto' }} />
+                                <img src='../../../public/images/fabric.png' alt="Material" style={{ height: '30px', width: 'auto' }} />
                                 <Typography variant="body2" component="div" sx={{ mt: 1, textAlign: 'center' }}>
                                     {furniture.material}
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <img src='../../public/images/weight.png' alt="Weight" style={{ height: '30px', width: 'auto' }} />
+                                <img src='../../../public/images/weight.png' alt="Weight" style={{ height: '30px', width: 'auto' }} />
                                 <Typography variant="body2" component="div" sx={{ mt: 1, textAlign: 'center' }}>
                                     {furniture.weight} kg
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <img src='../../../public/images/cube.png' alt="Dimensions" style={{ height: '30px', width: 'auto' }} />
+                                <img src='../../../../public/images/cube.png' alt="Dimensions" style={{ height: '30px', width: 'auto' }} />
                                 <Typography variant="body2" component="div" sx={{ mt: 1, textAlign: 'center' }}>
                                     {furniture.dimensions.length}cm x {furniture.dimensions.width}cm x {furniture.dimensions.height}cm
                                 </Typography>

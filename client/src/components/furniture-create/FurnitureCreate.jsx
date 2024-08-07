@@ -5,7 +5,7 @@ const FurnitureCreate = () => {
     return (
         <Box
             sx={{
-                backgroundImage: 'url(../../public/images/background.jpg)',
+                backgroundImage: 'url(../../../public/images/background.jpg)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 minHeight: '100vh',

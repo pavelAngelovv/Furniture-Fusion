@@ -7,7 +7,7 @@ import AwesomeSlider from 'react-awesome-slider';
 import { useMediaQuery, useTheme } from '@mui/material';
 import 'react-awesome-slider/dist/styles.css';
 import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
-import styles from '../../public/styles/home.module.css';
+import styles from '../../styles/home.module.css';
 
 // Utility function to chunk array into groups
 const chunkArray = (array, size) => {
@@ -53,7 +53,7 @@ const Home = () => {
       <Grid container spacing={2} sx={{ mb: '2rem', width: '80%' }}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <img
-            src='../../public/images/Furniture-Fusion-logo.png'
+            src='../../../public/images/Furniture-Fusion-logo.png'
             alt="Logo"
             style={{ height: '320px', width: 'auto' }}
           />

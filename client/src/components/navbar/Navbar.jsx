@@ -14,7 +14,7 @@ import { Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slices/authSlice';
-import styles from '../../public/styles/navbar.module.css';
+import styles from '../../styles/navbar.module.css';
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -116,7 +116,7 @@ export default function PrimarySearchAppBar() {
                                 mr: isLoginPage || isRegisterPage ? "3rem" : 0
                               }}
                         >
-                            <img src='../../public/images/Furniture-Fusion-Text-White.png' alt="Logo" className={styles['logo-img']} />
+                            <img src='../../../public/images/Furniture-Fusion-Text-White.png' alt="Logo" className={styles['logo-img']} />
                         </IconButton>
                         {!isSmallScreen && (
                             <Box sx={{ ml: '2rem' }}>
