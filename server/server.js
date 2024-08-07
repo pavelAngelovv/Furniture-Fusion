@@ -1559,7 +1559,7 @@
                     "height": 180
                 },
                 "weight": 40,
-                "image": "https://themprojects.com/wp-content/uploads/2017/08/appealing-wood-bookcase-with-doors-solid-wood-construction-natural-for-large-solid-wood-bookcase.jpg",
+                "image": "https://cdn.vox-cdn.com/thumbor/vrTN78nXSXFQKGRJ-52VRuQiq90=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19494119/bookcase_toutx.jpg",
                 "ownerData": {
                     "firstName": "Peter",
                     "lastName": "Doe",
