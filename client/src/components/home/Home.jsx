@@ -59,7 +59,7 @@ const Home = () => {
           />
         </Grid>
         <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Typography variant="h4" align="center" sx={{ px: 2, fontFamily: '"Snell Roundhand", cursive', fontWeight: 'bold', color: 'black' }}>
+          <Typography variant="h4" align="center" sx={{ px: 2, fontFamily: '"Dancing Script", cursive', fontWeight: 'bold', color: 'black' }}>
             Welcome to Furniture Fusion! Discover the best furniture for your home.
           </Typography>
         </Grid>
