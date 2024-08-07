@@ -38,6 +38,10 @@
   overflow: visible !important;
 }
 
+.MuiPaper-root {
+  background-color: white !important; /* Use !important if other styles are overriding it */
+}
+
 .slide {
     display: flex;
     justify-content: center;
