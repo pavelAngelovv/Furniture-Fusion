@@ -45,7 +45,7 @@ const LoginForm = () => {
                 backgroundColor: 'white'
             }}
         >
-            <Typography variant="h4" gutterBottom>
+            <Typography sx={{ color: 'black' }} variant="h4" gutterBottom>
                 Login
             </Typography>
 

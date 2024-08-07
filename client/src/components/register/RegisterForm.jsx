@@ -53,7 +53,7 @@ const RegisterForm = () => {
                 backgroundColor: 'white'
             }}
         >
-            <Typography variant="h4" gutterBottom>
+            <Typography sx={{ color: 'black' }} variant="h4" gutterBottom>
                 Register
             </Typography>
 
