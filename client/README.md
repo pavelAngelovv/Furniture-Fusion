@@ -142,3 +142,6 @@ FURNITURE-FUSION/
 
 ## Start the Application
 `npm run dev`
+
+
+Project is deployed at: https://furniture-fusion.netlify.app/
