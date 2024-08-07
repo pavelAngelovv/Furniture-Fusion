@@ -49,7 +49,8 @@ const RegisterForm = () => {
                 margin: '0 auto',
                 p: 3,
                 borderRadius: 2,
-                boxShadow: 3
+                boxShadow: 3,
+                backgroundColor: 'white'
             }}
         >
             <Typography variant="h4" gutterBottom>

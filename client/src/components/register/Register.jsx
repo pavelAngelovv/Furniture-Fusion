@@ -11,7 +11,7 @@ const Register = () => {
         backgroundPosition: 'center',
         minHeight: '100vh',
         padding: 4,
-        mt: '7rem'
+        mt: '3.5rem'
       }}
     >
       <RegisterForm />
