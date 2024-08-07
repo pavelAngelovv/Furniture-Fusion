@@ -46,10 +46,10 @@ const Profile = () => {
       </Box>
       {user ? (
         <Box className={styles.profileInfo}>
-          <Typography variant="body1">{user.firstName} {user.lastName}</Typography>
-          <Typography variant="body1">{user.email}</Typography>
-          <Typography variant="body1">{user.phoneNumber}</Typography>
-          <Typography variant="body1">{user.location}</Typography>
+          <Typography color='default' variant="body1">{user.firstName} {user.lastName}</Typography>
+          <Typography color='default' variant="body1">{user.email}</Typography>
+          <Typography color='default' variant="body1">{user.phoneNumber}</Typography>
+          <Typography color='default' variant="body1">{user.location}</Typography>
           {location && <Map location={location} />}
         </Box>
       ) : (
