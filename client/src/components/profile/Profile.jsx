@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserData } from '../../slices/userSlice';
 import { Box, Typography, CircularProgress, Avatar } from '@mui/material';
-import styles from '../../../public/styles/profile.module.css';
+import styles from '../../styles/profile.module.css';
 import Map from '../map/Map';
 
 const Profile = () => {

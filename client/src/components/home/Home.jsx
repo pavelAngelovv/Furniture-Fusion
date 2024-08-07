@@ -7,7 +7,7 @@ import AwesomeSlider from 'react-awesome-slider';
 import { useMediaQuery, useTheme } from '@mui/material';
 import 'react-awesome-slider/dist/styles.css';
 import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
-import styles from '../../../public/styles/home.module.css';
+import styles from '../../styles/home.module.css';
 
 // Utility function to chunk array into groups
 const chunkArray = (array, size) => {
