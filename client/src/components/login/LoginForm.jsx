@@ -95,11 +95,10 @@ const LoginForm = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    sx={{ mr: '30px' }}
                 >
                     Login
                 </Button>
-                <Typography variant="body2">
+                <Typography sx={{ ml: '40px' }} color='default' variant="body2">
                     Don&apos;t have an account? Click <Link to={'/register'}>here</Link> to register.
                 </Typography>
             </Box>

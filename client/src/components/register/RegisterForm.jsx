@@ -177,7 +177,7 @@ const RegisterForm = () => {
                 >
                     Register
                 </Button>
-                <Typography variant="body2">
+                <Typography sx={{ ml: '40px' }} color='default' variant="body2">
                     Already have an account? Click <Link to={'/login'}>here</Link> to log in.
                 </Typography>
             </Box>
