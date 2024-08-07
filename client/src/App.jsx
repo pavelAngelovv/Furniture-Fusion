@@ -8,6 +8,7 @@ import Home from './components/home/Home';
 import Register from './components/register/Register';
 import Login from './components/login/Login';
 import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';  // Import PublicRoute
 import FurnitureLiked from './components/furniture-liked/FurnitureLiked';
 import FurnitureCreate from './components/furniture-create/FurnitureCreate';
 import AboutUs from './components/about-us/AboutUs';
@@ -26,9 +27,23 @@ const App = () => {
             <Route path="/furniture/:id" element={<FurnitureDetails />} />
             <Route path="/furniture/liked" element={<FurnitureLiked />} />
             <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
+
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              }
+            />
 
             {/* Private Routes */}
             <Route
@@ -44,6 +59,14 @@ const App = () => {
               element={
                 <PrivateRoute>
                   <FurnitureEdit />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
                 </PrivateRoute>
               }
             />

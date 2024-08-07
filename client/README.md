@@ -43,22 +43,22 @@ The application is divided into two main parts: Public and Private.
 - **User Experience:** Incorporates responsive design, loading indicators, and user-friendly error messages to enhance overall user experience.
 
 ## Component Overview
-- **App.js:** 
+- **App.jsx:** 
   - Provider: Wraps the application with Redux store.
   - Router: Handles routing with React Router.
   - Layout: Provides a consistent layout for the application.
-- **FurnitureCatalog.js:** 
+- **FurnitureCatalog.jsx:** 
   - Displays a list of furniture items.
   - Includes search and filter functionality.
-- **FurnitureDetails.js:** 
+- **FurnitureDetails.jsx:** 
   - Shows detailed information about a selected furniture item.
-- **FurnitureLiked.js:** 
+- **FurnitureLiked.jsx:** 
   - Displays furniture items liked by the user.
-- **FurnitureCreate.js:** 
+- **FurnitureCreate.jsx:** 
   - Form for creating new furniture listings.
-- **FurnitureEdit.js:** 
+- **FurnitureEdit.jsx:** 
   - Form for editing existing furniture listings.
-- **Profile.js:** 
+- **Profile.jsx:** 
   - Allows users to view and edit their profile information.
 
 ## Routing
@@ -85,3 +85,50 @@ The application is divided into two main parts: Public and Private.
 - **User Feedback:** Includes user-friendly messages and visual feedback for form submission and error states.
 
 ## Folder Structure
+FURNITURE-FUSION/
+├── client/
+│ ├── src/
+│ │ ├── components/
+│ │ │ ├── layout/
+│ │ │ ├── furniture-catalog/
+│ │ │ ├── furniture-details/
+│ │ │ ├── home/
+│ │ │ ├── register/
+│ │ │ ├── login/
+│ │ │ ├── private-route/
+│ │ │ ├── furniture-liked/
+│ │ │ ├── furniture-create/
+│ │ │ ├── furniture-edit/
+│ │ │ └── profile/
+│ │ ├── hooks/
+│ │ ├── services/
+│ │ │ ├── furnitureService.js
+│ │ │ └── userService.js
+│ │ ├── slices/
+│ │ │ ├── authSlice.js
+│ │ │ ├── furnitureSlice.js
+│ │ │ └── userSlice.js
+│ │ ├── store/
+│ │ ├── styles/
+│ │ ├── App.jsx
+│ │ └── main.jsx
+│ ├── .env
+│ ├── .eslintrc.cjs
+│ ├── .gitignore
+│ ├── index.html
+│ ├── package-lock.json
+│ ├── package.json
+│ └── vite.config.js
+├── server/
+│ ├── server.js
+└── README.md
+
+## Project Setup and Running
+1. **Clone the Repository**
+   git clone <repository-url>
+   cd <project-directory>
+## Install Dependencies
+`npm install`
+
+## Start the Application
+`npm run dev`
