@@ -25,7 +25,7 @@ console.log(loading);
             items={furnitureItems}
             loading={loading}
             error={loading}
-            title="You have no liked items yet."
+            title="No furniture uploaded :("
             onSearchChange={handleSearchChange}
             onCategoryChange={handleCategoryChange}
             onMaterialChange={handleMaterialChange}
