@@ -14,7 +14,7 @@ import { Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import TemporaryDrawer from './drawer/TemporaryDrawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slices/authSlice';
-import styles from '../../styles/navbar.module.css';
+import styles from '../../public/styles/navbar.module.css';
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
