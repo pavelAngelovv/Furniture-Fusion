@@ -53,7 +53,7 @@ const Home = () => {
       <Grid container spacing={2} sx={{ mb: '2rem', width: '80%' }}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <img
-            src='/images/Furniture-Fusion-logo.png'
+            src='../../public/images/Furniture-Fusion-logo.png'
             alt="Logo"
             style={{ height: '320px', width: 'auto' }}
           />
