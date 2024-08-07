@@ -5,7 +5,7 @@ const FurnitureEdit = () => {
     return (
         <Box
             sx={{
-                backgroundImage: 'url(../../../public/images/background.jpg)',
+                backgroundImage: 'url(/images/background.jpg)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 minHeight: '100vh',
