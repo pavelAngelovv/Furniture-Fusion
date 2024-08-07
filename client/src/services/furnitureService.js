@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL + '/data/furniture';
+const API_URL = import.meta.env.VITE_API_URL + 'data/furniture';
 
 export const getFurnitureItems = async () => {
   const response = await axios.get(API_URL);
