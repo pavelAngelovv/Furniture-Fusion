@@ -92,47 +92,6 @@ The application is divided into two main parts: Public and Private.
 - **Error Boundaries:** Handles API errors and validation issues gracefully.
 - **User Feedback:** Includes user-friendly messages and visual feedback for form submission and error states.
 
-## Folder Structure
-FURNITURE-FUSION/
-├── client/
-| ├──public/images
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── about-us/
-│ │ │ ├── layout/
-│ │ │ ├── furniture-catalog/
-│ │ │ ├── furniture-details/
-│ │ │ ├── home/
-│ │ │ ├── register/
-│ │ │ ├── login/
-│ │ │ ├── private-route/
-│ │ │ ├── furniture-liked/
-│ │ │ ├── furniture-create/
-│ │ │ ├── furniture-edit/
-│ │ │ ├── profile/
-│ │ │ └── map/
-│ │ ├── hooks/
-│ │ ├── services/
-│ │ │ ├── furnitureService.js
-│ │ │ └── userService.js
-│ │ ├── slices/
-│ │ │ ├── authSlice.js
-│ │ │ ├── furnitureSlice.js
-│ │ │ └── userSlice.js
-│ │ ├── store/
-│ │ ├── styles/
-│ │ ├── App.jsx
-│ │ └── main.jsx
-│ ├── .env
-│ ├── .eslintrc.cjs
-│ ├── .gitignore
-│ ├── index.html
-│ ├── package-lock.json
-│ ├── package.json
-│ └── vite.config.js
-├── server/
-│ ├── server.js
-└── README.md
 ## Project Setup and Running
 1. **Clone the Repository**
    git clone <repository-url>
